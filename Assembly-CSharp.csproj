@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{DFE6C659-9232-645D-B30C-2DAB5FF63DD5}</ProjectGuid>
+    <ProjectGuid>{2DE2EC59-316C-CFAC-AD47-EBFE6F80C990}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -53,12 +53,15 @@
     <UnityVersion>2021.3.21f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="A:\VisualStudio\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\RabbitMovement.cs" />
+    <Compile Include="Assets\DialogueManager.cs" />
+    <Compile Include="Assets\Dialogue.cs" />
+    <Compile Include="Assets\RabbitScript.cs" />
     <Compile Include="Assets\CameraScript.cs" />
-    <Compile Include="Assets\HorseMovement.cs" />
+    <Compile Include="Assets\DialogueTrigger.cs" />
+    <Compile Include="Assets\StagScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
