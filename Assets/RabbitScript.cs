@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RabbitScript : MonoBehaviour
+public class RabbitScript : TalkableScript
 {
 
     [Header("Sphere Settings")]
@@ -27,12 +27,15 @@ public class RabbitScript : MonoBehaviour
     private bool isGrounded;
     private bool isJumping;
 
+    [Header("Dialog Settings")]
+    private bool talkingBool;
     public string rabbitName;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rabbitAnimator = GetComponent<Animator>();
         rabbitName = "Carottino";
+        talkingBool = false;
     }
 
     // Update is called once per frame
@@ -41,6 +44,9 @@ public class RabbitScript : MonoBehaviour
 
         isGrounded = Physics.CheckSphere(sphereGO.position, sphereRadius, floorLayer);
         rabbitAnimator.SetBool("Grounded", isGrounded);
+
+
+        if (talkingBool) return;
 
         if (!isGrounded)
         {
@@ -87,4 +93,8 @@ public class RabbitScript : MonoBehaviour
         #endregion
     }
 
+    public override void StartEndConversation()
+    {
+        talkingBool = !talkingBool;
+    }
 }

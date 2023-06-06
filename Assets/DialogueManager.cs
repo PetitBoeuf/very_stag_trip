@@ -10,15 +10,22 @@ public class DialogueManager : MonoBehaviour
 
     public TextMeshProUGUI nameCanvasText;
     public TextMeshProUGUI sentenceCanvasText;
+    private TalkableScript stagScript;
+    private TalkableScript interlocutorScript;
+    private Dialogue dialogue;
+    public Animator DialogBoxAnimator;
+
     void Start()
     {
         sentences = new Queue<string[]>();
+        dialogue = new Dialogue();
     }
 
-    public void StartDialogue(Dialogue dialogue)
+    public void StartDialogue(Dialogue p_dialogue)
     {
         //Debug.Log("Starting conversation with " + dialogue.name);
-
+        DialogBoxAnimator.SetBool("show", true);
+        dialogue = p_dialogue;
         sentences.Clear();
         foreach(string[] dialog in dialogue.dialogList)
         {
@@ -41,7 +48,10 @@ public class DialogueManager : MonoBehaviour
     }
     void EndDialogue()
     {
-        Debug.Log("Ending conversation");
+        DialogBoxAnimator.SetBool("show", false);
+        dialogue.stagScript.StartEndConversation();
+        dialogue.stagInterlocutor.StartEndConversation();
+        Debug.Log("Ending conversation between " + dialogue.stagScript.name + " and " + dialogue.stagInterlocutor.name + ".");
     }
 
 }

@@ -58,9 +58,9 @@
   <ItemGroup>
     <Compile Include="Assets\DialogueManager.cs" />
     <Compile Include="Assets\Dialogue.cs" />
+    <Compile Include="Assets\TalkableScript.cs" />
     <Compile Include="Assets\RabbitScript.cs" />
     <Compile Include="Assets\CameraScript.cs" />
-    <Compile Include="Assets\DialogueTrigger.cs" />
     <Compile Include="Assets\StagScript.cs" />
   </ItemGroup>
   <ItemGroup>

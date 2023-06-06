@@ -350,9 +350,9 @@
 "Assets/CameraScript.cs"
 "Assets/Dialogue.cs"
 "Assets/DialogueManager.cs"
-"Assets/DialogueTrigger.cs"
 "Assets/RabbitScript.cs"
 "Assets/StagScript.cs"
+"Assets/TalkableScript.cs"
 -langversion:9.0
 
 /deterministic

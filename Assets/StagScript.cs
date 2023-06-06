@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
-public class StagScript : MonoBehaviour
+public class StagScript : TalkableScript
 
 {
     [Header("Sphere Settings")]
@@ -51,32 +52,88 @@ public class StagScript : MonoBehaviour
     public string stagName = "Bambinocéros";
     public RabbitScript rabbitScript;
 
-    private Dialogue stagDialog;
+    [Header("Dialog Settings")]
+    private Dialogue currentDialog;
     public DialogueManager dialogueManager;
-    private bool startedDialogue;
+    private bool canTalk;
+    private bool talkingBool;
+    private Queue<Dialogue> stagDialogs;
     // Start is called before the first frame update
     void Start()
     {
-        startedDialogue = false;
         stagRb = GetComponent<Rigidbody>();
         //stagGO = GetComponent<GameObject>();
         //stagTransform = GetComponent<Transform>();
         stagAnimator = GetComponent<Animator>();
-        stagDialog = GetComponent<Dialogue>();
 
         //appleTextCounter.text = $"Pommes tap�es : 0";
+        stagDialogs = new Queue<Dialogue>();
+        talkingBool = false;
+        canTalk = true;
+        //currentDialog = new Dialogue(
+        //    this,
+        //    rabbitScript,
+        //    new List<string[]>()
+        //        {
+        //            new string[] { stagName, "Salut petit lapin !" },
+        //            new string[] { rabbitScript.rabbitName, "J'ai faim.." },
+        //            new string[] { stagName, "Ah zut ! Je peux t'aider peut-être? " },
+        //            new string[] { rabbitScript.rabbitName, "J'ai soif... " },
+        //            new string[] { stagName, "Euh..oui j'ai cru comprendre que t'étais dans le besoin oui... " },
+        //            new string[] { rabbitScript.rabbitName, "QU'ON ME DONNE UNE KAROT AAAAA " },
+        //            new string[] { stagName, "Bon, je vais voir ce que je peux faire.." },
+        //            new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAA" }
+        //        }
+        //    );
+        stagDialogs.Enqueue(
+            new Dialogue(
+            this,
+            rabbitScript,
+            new List<string[]>()
+                {
+                    new string[] { stagName, "Salut petit lapin !" },
+                    new string[] { rabbitScript.rabbitName, "J'ai faim.." },
+                    new string[] { stagName, "Ah zut ! Je peux t'aider peut-être? " },
+                    new string[] { rabbitScript.rabbitName, "J'ai soif... " },
+                    new string[] { stagName, "Euh..oui j'ai cru comprendre que t'étais dans le besoin oui... " },
+                    new string[] { rabbitScript.rabbitName, "QU'ON ME DONNE UNE KAROT AAAAA " },
+                    new string[] { stagName, "Bon, je vais voir ce que je peux faire.." },
+                    new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAA" }
+                }
+            )
+        );
+        stagDialogs.Enqueue(
+            new Dialogue(
+                this,
+                rabbitScript,
+                new List<string[]>()
+                    {
+                         new string[] { stagName, "Bon, reuh !" },
+                        new string[] { rabbitScript.rabbitName, "J'ai toujours faaaaim.." },
+                        new string[] { stagName, "Mais je viens de te filer la plus grosse carotte de la forêt ! " },
+                        new string[] { rabbitScript.rabbitName, "Mais j'ai toujours faaaaaaaim... " },
+                        new string[] { stagName, "Est-ce qu'il y aurait quelque chose dans cette forêt qui pourrait te satisfaire au moins ?" },
+                        new string[] { rabbitScript.rabbitName, "KAROOOOOOOOOOOOOOOOOOOOOOOOOOOT" },
+                        new string[] { stagName, "...." },
+                        new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                    }
+                )
+            );
 
-        stagDialog.dialogList = new List<string[]>()
-        {
-            new string[] { stagName, "Salut petit lapin !" },
-            new string[] { rabbitScript.rabbitName, "J'ai faim.." },
-            new string[] { stagName, "Ah zut ! Je peux t'aider peut-être? " },
-            new string[] { rabbitScript.rabbitName, "J'ai soif... " },
-            new string[] { stagName, "Euh..oui j'ai cru comprendre que t'étais dans le besoin oui... " },
-            new string[] { rabbitScript.rabbitName, "QU'ON ME DONNE DES KAROT AAAAA " },
-            new string[] { stagName, "Bon, je vais voir ce que je peux faire." },
-            new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAA" }
-        };
+        //currentDialog.dialogList = new List<string[]>()
+        //{
+        //    new string[] { stagName, "Bon, reuh !" },
+        //    new string[] { rabbitScript.rabbitName, "J'ai toujours faaaaim.." },
+        //    new string[] { stagName, "Mais je viens de te filer la plus grosse carotte de la forêt ! " },
+        //    new string[] { rabbitScript.rabbitName, "Mais j'ai toujours faaaaaaaim... " },
+        //    new string[] { stagName, "Est-ce qu'il y aurait quelque chose dans cette forêt qui pourrait te satisfaire au moins ?" },
+        //    new string[] { rabbitScript.rabbitName, "KAROOOOOOOOOOOOOOOOOOOOOOOOOOOT" },
+        //    new string[] { stagName, "...." },
+        //    new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+        //};
+        //currentDialog.stagScript = this;
+        //currentDialog.stagInterlocutor = rabbitScript;
+        //stagDialogs.Enqueue(currentDialog);
     }
 
     // Update is called once per frame
@@ -117,18 +174,16 @@ public class StagScript : MonoBehaviour
             return;
         }
 
-
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && canTalk)
         {
-            if (!startedDialogue)
+            if (!talkingBool)
             {
-                dialogueManager.StartDialogue(stagDialog);
-                startedDialogue = true;
+                StartEndConversation();
+                dialogueManager.StartDialogue(currentDialog);
                 return;
             }
             dialogueManager.DisplayNextSentence();
             return;
-
         }
 
         float forwardMovement = Input.GetAxis("Vertical");
@@ -228,5 +283,17 @@ public class StagScript : MonoBehaviour
     {
         //Debug.Log(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("StagEat"));
         return stagAnimator.GetCurrentAnimatorStateInfo(0).IsName("StagRun") && stagAnimator.GetCurrentAnimatorStateInfo(0).length > stagAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+    }
+    public override void StartEndConversation()
+    {
+        if (!talkingBool)
+        {
+            currentDialog = stagDialogs.Dequeue();
+            talkingBool = true;
+            return;
+        }
+        talkingBool = false;
+        //canTalk = false;
+        return;
     }
 }
