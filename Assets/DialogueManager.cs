@@ -10,10 +10,14 @@ public class DialogueManager : MonoBehaviour
 
     public TextMeshProUGUI nameCanvasText;
     public TextMeshProUGUI sentenceCanvasText;
-    private TalkableScript stagScript;
-    private TalkableScript interlocutorScript;
+    //private TalkableScript stagScript;
     private Dialogue dialogue;
     public Animator DialogBoxAnimator;
+
+    public StagScript stagScript;
+    public Transform stagTransform;
+
+    //private TalkableScript interlocutorScript;
 
     void Start()
     {
@@ -24,8 +28,20 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue p_dialogue)
     {
         //Debug.Log("Starting conversation with " + dialogue.name);
+        
         DialogBoxAnimator.SetBool("show", true);
         dialogue = p_dialogue;
+        dialogue.stagInterlocutorScript.StartEndConversation();
+
+        stagTransform.rotation = Quaternion.RotateTowards(
+            stagTransform.rotation,
+            Quaternion.LookRotation(
+                dialogue.stagInterlocutorTransform.position - stagTransform.position,
+                Vector3.up
+            ),
+            360
+        );
+
         sentences.Clear();
         foreach(string[] dialog in dialogue.dialogList)
         {
@@ -49,9 +65,9 @@ public class DialogueManager : MonoBehaviour
     void EndDialogue()
     {
         DialogBoxAnimator.SetBool("show", false);
-        dialogue.stagScript.StartEndConversation();
-        dialogue.stagInterlocutor.StartEndConversation();
-        Debug.Log("Ending conversation between " + dialogue.stagScript.name + " and " + dialogue.stagInterlocutor.name + ".");
+        stagScript.StartEndConversation();
+        dialogue.stagInterlocutorScript.StartEndConversation();
+        Debug.Log("Ending conversation between " + stagScript.name + " and " + dialogue.stagInterlocutorScript.name + ".");
     }
 
 }

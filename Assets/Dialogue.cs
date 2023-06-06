@@ -7,14 +7,16 @@ public class Dialogue
     //public string name;
     //[TextArea(3,10)]
     //public string[] sentences;
-    public StagScript stagScript { get; set; }
-    public TalkableScript stagInterlocutor { get; set; }
+    //public StagScript stagScript { get; set; }
+    public TalkableScript stagInterlocutorScript { get; set; }
+    public Transform stagInterlocutorTransform { get; set; }
     public List<string[]> dialogList { get; set; }
 
-    public Dialogue(StagScript stagScript, TalkableScript stagInterlocutor, List<string[]> dialogList)
+    public Dialogue(TalkableScript stagInterlocutorScript, Transform stagInterlocutorTransform, List<string[]> dialogList)
     {
-        this.stagScript = stagScript;
-        this.stagInterlocutor = stagInterlocutor;
+        //this.stagScript = stagScript;
+        this.stagInterlocutorScript = stagInterlocutorScript;
+        this.stagInterlocutorTransform = stagInterlocutorTransform;
         this.dialogList = dialogList;
     }
 

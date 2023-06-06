@@ -24,12 +24,17 @@ public class RabbitScript : TalkableScript
     private Rigidbody rb;
     private Animator rabbitAnimator;
     private bool isFalling;
+    [SerializeField]
     private bool isGrounded;
     private bool isJumping;
 
     [Header("Dialog Settings")]
+    [SerializeField]
     private bool talkingBool;
     public string rabbitName;
+
+    [Header("Stag")]
+    public Transform stagTransform;
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -44,9 +49,6 @@ public class RabbitScript : TalkableScript
 
         isGrounded = Physics.CheckSphere(sphereGO.position, sphereRadius, floorLayer);
         rabbitAnimator.SetBool("Grounded", isGrounded);
-
-
-        if (talkingBool) return;
 
         if (!isGrounded)
         {
@@ -63,6 +65,8 @@ public class RabbitScript : TalkableScript
             }
             return;
         }
+
+        if (talkingBool) return;
 
         if (lastJumpTime != 0)
             if(Time.time - lastJumpTime < jumpPeriod) return;
@@ -95,6 +99,11 @@ public class RabbitScript : TalkableScript
 
     public override void StartEndConversation()
     {
+        if(!talkingBool)
+        {
+            Quaternion destRotation = Quaternion.LookRotation(stagTransform.position - transform.position, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, destRotation, rabbitRotationFactor);
+        }
         talkingBool = !talkingBool;
     }
 }

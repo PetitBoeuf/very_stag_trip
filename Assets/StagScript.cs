@@ -51,6 +51,7 @@ public class StagScript : TalkableScript
     [Header("Dialogue Settings")]
     public string stagName = "Bambinocéros";
     public RabbitScript rabbitScript;
+    public Transform rabbitTransform;
 
     [Header("Dialog Settings")]
     private Dialogue currentDialog;
@@ -87,25 +88,27 @@ public class StagScript : TalkableScript
         //    );
         stagDialogs.Enqueue(
             new Dialogue(
-            this,
-            rabbitScript,
-            new List<string[]>()
-                {
-                    new string[] { stagName, "Salut petit lapin !" },
-                    new string[] { rabbitScript.rabbitName, "J'ai faim.." },
-                    new string[] { stagName, "Ah zut ! Je peux t'aider peut-être? " },
-                    new string[] { rabbitScript.rabbitName, "J'ai soif... " },
-                    new string[] { stagName, "Euh..oui j'ai cru comprendre que t'étais dans le besoin oui... " },
-                    new string[] { rabbitScript.rabbitName, "QU'ON ME DONNE UNE KAROT AAAAA " },
-                    new string[] { stagName, "Bon, je vais voir ce que je peux faire.." },
-                    new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAA" }
-                }
-            )
+                //GetComponent<StagScript>(),
+                rabbitScript,
+                rabbitTransform,
+                new List<string[]>()
+                    {
+                        new string[] { stagName, "Salut petit lapin !" },
+                        new string[] { rabbitScript.rabbitName, "J'ai faim.." },
+                        new string[] { stagName, "Ah zut ! Je peux t'aider peut-être? " },
+                        new string[] { rabbitScript.rabbitName, "J'ai soif... " },
+                        new string[] { stagName, "Euh..oui j'ai cru comprendre que t'étais dans le besoin oui... " },
+                        new string[] { rabbitScript.rabbitName, "QU'ON ME DONNE UNE KAROT AAAAA " },
+                        new string[] { stagName, "Bon, je vais voir ce que je peux faire.." },
+                        new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAA" }
+                    }
+                )
         );
         stagDialogs.Enqueue(
             new Dialogue(
-                this,
+                //GetComponent<StagScript>(),
                 rabbitScript,
+                rabbitTransform,
                 new List<string[]>()
                     {
                          new string[] { stagName, "Bon, reuh !" },
@@ -186,6 +189,7 @@ public class StagScript : TalkableScript
             return;
         }
 
+
         float forwardMovement = Input.GetAxis("Vertical");
         float horizontalMovement = Input.GetAxis("Horizontal");
 
@@ -202,6 +206,7 @@ public class StagScript : TalkableScript
             return;
         }
 
+        if (talkingBool) return;
 
 
         #region MovingStag
@@ -286,6 +291,7 @@ public class StagScript : TalkableScript
     }
     public override void StartEndConversation()
     {
+        //Debug.Log("Entering StagScript");
         if (!talkingBool)
         {
             currentDialog = stagDialogs.Dequeue();
