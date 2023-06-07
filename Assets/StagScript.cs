@@ -210,9 +210,6 @@ public class StagScript : TalkableScript
 
 
         #region MovingStag
-
-        //This prevents values not getting resetted since we can start walking/running asa the Eating animation ends.
-        //Therefore, we reset it to make our script work correctly.
         if (isGrounded)
         {
 

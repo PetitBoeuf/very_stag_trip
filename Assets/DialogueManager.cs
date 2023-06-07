@@ -17,6 +17,8 @@ public class DialogueManager : MonoBehaviour
     public StagScript stagScript;
     public Transform stagTransform;
 
+    public CameraScript cameraScript;
+
     //private TalkableScript interlocutorScript;
 
     void Start()
@@ -28,7 +30,12 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue p_dialogue)
     {
         //Debug.Log("Starting conversation with " + dialogue.name);
-        
+
+
+        //SmoothTransition
+
+        cameraScript.SetDialogueCamera();
+
         DialogBoxAnimator.SetBool("show", true);
         dialogue = p_dialogue;
         dialogue.stagInterlocutorScript.StartEndConversation();
@@ -64,6 +71,7 @@ public class DialogueManager : MonoBehaviour
     }
     void EndDialogue()
     {
+        cameraScript.ResetCamera();
         DialogBoxAnimator.SetBool("show", false);
         stagScript.StartEndConversation();
         dialogue.stagInterlocutorScript.StartEndConversation();
