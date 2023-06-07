@@ -36,8 +36,8 @@ public class CameraScript : MonoBehaviour
         playerOrientation.right = transform.right;
         if (freeLook)
         {
-            dialogCameraTransform.position = transform.position;
-            //dialogCameraTransform.right = transform.right;
+            //dialogCameraTransform.position = transform.position;
+            dialogCameraTransform.right = transform.right;
         }
     }
     public void SetDialogueCamera()

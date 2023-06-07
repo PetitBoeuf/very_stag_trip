@@ -75,7 +75,7 @@ public class DialogueManager : MonoBehaviour
         DialogBoxAnimator.SetBool("show", false);
         stagScript.StartEndConversation();
         dialogue.stagInterlocutorScript.StartEndConversation();
-        Debug.Log("Ending conversation between " + stagScript.name + " and " + dialogue.stagInterlocutorScript.name + ".");
+        //Debug.Log("Ending conversation between " + stagScript.name + " and " + dialogue.stagInterlocutorScript.name + ".");
     }
 
 }

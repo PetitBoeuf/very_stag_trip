@@ -106,4 +106,5 @@ public class RabbitScript : TalkableScript
         }
         talkingBool = !talkingBool;
     }
+
 }
