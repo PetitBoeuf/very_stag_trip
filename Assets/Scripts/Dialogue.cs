@@ -8,11 +8,11 @@ public class Dialogue
     //[TextArea(3,10)]
     //public string[] sentences;
     //public StagScript stagScript { get; set; }
-    public TalkableScript stagInterlocutorScript { get; set; }
+    public InteractableAnimal stagInterlocutorScript { get; set; }
     public Transform stagInterlocutorTransform { get; set; }
     public List<string[]> dialogList { get; set; }
 
-    public Dialogue(TalkableScript stagInterlocutorScript, Transform stagInterlocutorTransform, List<string[]> dialogList)
+    public Dialogue(InteractableAnimal stagInterlocutorScript, Transform stagInterlocutorTransform, List<string[]> dialogList)
     {
         //this.stagScript = stagScript;
         this.stagInterlocutorScript = stagInterlocutorScript;
