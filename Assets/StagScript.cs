@@ -42,6 +42,8 @@ public class StagScript : TalkableScript
     public float walkFactor = 1.5f;
     public float runFactor = 4f;
     private float factor;
+
+    public float jumpFactor;
     private float speed = 0f;
     private int stagRotationFactor = 360;
 
@@ -236,11 +238,11 @@ public class StagScript : TalkableScript
             transform.Translate(inputDirection * speed * Time.deltaTime, orientation);
             //transform.Translate(inputDirection * speed * Time.deltaTime);
 
-            if (Input.GetKey(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 isJumping = true;
                 //stagRb.AddForce(transform.forward + new Vector3(0, 1f, 0f), ForceMode.Impulse);
-                stagRb.AddForce(transform.forward + new Vector3(0, 1f, 0f), ForceMode.Impulse);
+                stagRb.AddForce(transform.forward + new Vector3(0, jumpFactor, 0f), ForceMode.Impulse);
             }
             //stagAnimator.SetBool("Eat", isEating);
             stagAnimator.SetFloat("Speed", speed);

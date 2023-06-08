@@ -57,35 +57,35 @@ public class CameraScript : MonoBehaviour
         cinemachineCamera.enabled = false;
         dialogCamera.enabled = true;
         freeLook = false;
-        Vector3 startPosition = transform.position; // Position de départ de la caméra
+        Vector3 startPosition = transform.position; // Position de dï¿½part de la camï¿½ra
 
-        float elapsedTime = 0f; // Temps écoulé depuis le début du mouvement
+        float elapsedTime = 0f; // Temps ï¿½coulï¿½ depuis le dï¿½but du mouvement
         while (elapsedTime < 1f)
         {
-            elapsedTime += Time.deltaTime * 3f; // Incrémentez le temps écoulé en fonction de la vitesse
+            elapsedTime += Time.deltaTime * 3f; // Incrï¿½mentez le temps ï¿½coulï¿½ en fonction de la vitesse
             //Debug.Log(elapsedTime);
             dialogCameraTransform.position = Vector3.Lerp(
                 startPosition,
                 dialogPOV.position,
                 elapsedTime
-            ); // Déplacez la caméra de manière fluide en utilisant Lerp
+            ); // Dï¿½placez la camï¿½ra de maniï¿½re fluide en utilisant Lerp
 
             dialogCameraTransform.rotation = Quaternion.Slerp(dialogCameraTransform.rotation, dialogPOV.rotation, elapsedTime);
 
             yield return null;
         }
 
-        // Assurez-vous que la caméra soit précisément à la position cible à la fin du mouvement
+        // Assurez-vous que la camï¿½ra soit prï¿½cisï¿½ment ï¿½ la position cible ï¿½ la fin du mouvement
         dialogCameraTransform.position = dialogPOV.position;
     }
     private IEnumerator ResetCamToFreeLook()
     {
 
-        Vector3 startPosition = dialogCameraTransform.position; // Position de départ de la caméra
-        float elapsedTime = 0f; // Temps écoulé depuis le début du mouvement
+        Vector3 startPosition = dialogCameraTransform.position; // Position de dï¿½part de la camï¿½ra
+        float elapsedTime = 0f; // Temps ï¿½coulï¿½ depuis le dï¿½but du mouvement
         while (elapsedTime < 1f)
         {
-            elapsedTime += Time.deltaTime * 3f; // Incrémentez le temps écoulé en fonction de la vitesse
+            elapsedTime += Time.deltaTime * 3f; // Incrï¿½mentez le temps ï¿½coulï¿½ en fonction de la vitesse
             //Debug.Log(elapsedTime);
             dialogCameraTransform.position = Vector3.Lerp(
                 startPosition,
@@ -97,7 +97,7 @@ public class CameraScript : MonoBehaviour
             yield return null;
         }
 
-        // Assurez-vous que la caméra soit précisément à la position cible à la fin du mouvement
+        // Assurez-vous que la camï¿½ra soit prï¿½cisï¿½ment ï¿½ la position cible ï¿½ la fin du mouvement
         dialogCameraTransform.position = transform.position;
         cinemachineCamera.enabled = true;
         dialogCamera.enabled = false;
