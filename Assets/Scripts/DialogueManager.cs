@@ -8,8 +8,9 @@ public class DialogueManager : MonoBehaviour
     private Queue<string[]> sentences;
     // Start is called before the first frame update
 
-    public TextMeshProUGUI nameCanvasText;
-    public TextMeshProUGUI sentenceCanvasText;
+    public TextMeshProUGUI stagNameDBox;
+    public TextMeshProUGUI interactAnimalDBox;
+    public TextMeshProUGUI sentenceDBox;
     //private TalkableScript stagScript;
     private Dialogue dialogue;
     public Animator DialogBoxAnimator;
@@ -80,8 +81,9 @@ public class DialogueManager : MonoBehaviour
             return false;
         }
         string[] sentence = sentences.Dequeue();
-        nameCanvasText.text = sentence[0];
-        sentenceCanvasText.text = sentence[1];
+        stagNameDBox.text = sentence[0];
+        interactAnimalDBox.text = sentence[0];
+        sentenceDBox.text = sentence[1];
 
         return true;
         //Debug.Log(sentence);
