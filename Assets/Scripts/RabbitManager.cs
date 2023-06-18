@@ -41,7 +41,7 @@ public class RabbitManager : InteractableAnimal
     {
         rb = GetComponent<Rigidbody>();
         rabbitAnimator = GetComponent<Animator>();
-        rabbitName = "Carottino";
+        //rabbitName = "Carottino";
         animalName = rabbitName;
         talkingBool = false;
         missions = new Queue<IMission>();
@@ -74,7 +74,7 @@ public class RabbitManager : InteractableAnimal
             return;
         }
 
-        if (talkingBool) return;
+        if (goingDialog) return;
 
         if (lastJumpTime != 0)
             if(Time.time - lastJumpTime < jumpPeriod) return;
@@ -112,14 +112,12 @@ public class RabbitManager : InteractableAnimal
 
     }
 
-    public override void StartEndConversation()
+    public override void AbleDisableMovement(bool p_goingDialog)
     {
-        if(!talkingBool)
-        {
-            Quaternion destRotation = Quaternion.LookRotation(stagTransform.position - transform.position, Vector3.up);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, destRotation, rabbitRotationFactor);
-        }
-        talkingBool = !talkingBool;
+        if (p_goingDialog == goingDialog)
+            return;
+
+        goingDialog = p_goingDialog;
     }
 
     //public interact()

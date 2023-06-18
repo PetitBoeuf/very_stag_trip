@@ -8,6 +8,8 @@ public class DialogueManager : MonoBehaviour
     private Queue<string[]> sentences;
     // Start is called before the first frame update
 
+    public GameObject interlocutorHolder;
+    public GameObject stagHolder;
     public TextMeshProUGUI stagNameDBox;
     public TextMeshProUGUI interactAnimalDBox;
     public TextMeshProUGUI sentenceDBox;
@@ -20,6 +22,7 @@ public class DialogueManager : MonoBehaviour
 
     public CameraScript cameraScript;
     public bool startedDialogue;
+    public Animator stagAnimator;
 
     //private TalkableScript interlocutorScript;
 
@@ -28,6 +31,8 @@ public class DialogueManager : MonoBehaviour
         startedDialogue = false;
         sentences = new Queue<string[]>();
         dialogue = new Dialogue();
+        interlocutorHolder.SetActive(false);
+        stagHolder.SetActive(false);
     }
 
     //public void StartDialogue(Dialogue p_dialogue)
@@ -68,6 +73,7 @@ public class DialogueManager : MonoBehaviour
         {
             sentences.Enqueue(dialog);
         }
+        stagAnimator.SetBool("Talking", true);
     }
 
     public bool DisplayNextSentence()
@@ -78,9 +84,24 @@ public class DialogueManager : MonoBehaviour
             //return false to say there is no more sentences
             cameraScript.ResetCamera();
             DialogBoxAnimator.SetBool("show", false);
+            stagAnimator.SetBool("Talking", false);
+
             return false;
         }
+
         string[] sentence = sentences.Dequeue();
+
+        if (sentence[0] == stagScript.stagName)
+        {
+            stagHolder.SetActive(true);
+            interlocutorHolder.SetActive(false);
+        }
+        else
+        {
+            stagHolder.SetActive(false);
+            interlocutorHolder.SetActive(true);
+        }
+
         stagNameDBox.text = sentence[0];
         interactAnimalDBox.text = sentence[0];
         sentenceDBox.text = sentence[1];

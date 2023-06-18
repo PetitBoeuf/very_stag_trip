@@ -176,7 +176,7 @@ public class StagManager : InteractableAnimal
             return;
         }
 
-        if (talkingBool) return;
+        if (goingDialog) return;
 
 
         #region MovingStag
@@ -256,19 +256,13 @@ public class StagManager : InteractableAnimal
         //Debug.Log(GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("StagEat"));
         return stagAnimator.GetCurrentAnimatorStateInfo(0).IsName("StagRun") && stagAnimator.GetCurrentAnimatorStateInfo(0).length > stagAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
-    public override void StartEndConversation()
+    public override void AbleDisableMovement(bool p_goingDialog)
     {
-        //Debug.Log("Entering StagScript");
-        if (!talkingBool)
-        {
-            currentDialog = stagDialogs.Dequeue();
-            talkingBool = true;
-            stagAnimator.SetBool("Talking", talkingBool);
+        //Handle differences to avoid setting the animation bool and/or the talkingBool continuously
+        if (p_goingDialog == goingDialog)
             return;
-        }
-        talkingBool = false;
-        stagAnimator.SetBool("Talking", talkingBool);
-        //canTalk = false;
-        return;
+
+        goingDialog = p_goingDialog;
+        stagAnimator.SetBool("Talking", goingDialog);
     }
 }
