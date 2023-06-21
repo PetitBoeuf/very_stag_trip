@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WorldManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class WorldManager : MonoBehaviour
     public LayerMask interactableLayer;
     public TextMeshProUGUI nearbyIAnimalText;
     public Transform stagTransform;
+
+    public RawImage iaRawImage;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +58,7 @@ public class WorldManager : MonoBehaviour
             else
                 interactableAnimal = FindNearestIAnimal(nearInteractables);
 
+            iaRawImage.texture = interactableAnimal.textureRenderer;
             nearbyIAnimalText.text = interactableAnimal.animalName;
         }
 

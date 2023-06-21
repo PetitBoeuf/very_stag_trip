@@ -353,6 +353,7 @@
 "Assets/Scripts/DialogueManager.cs"
 "Assets/Scripts/IMission.cs"
 "Assets/Scripts/InteractableAnimal.cs"
+"Assets/Scripts/MinimapCam_Movement.cs"
 "Assets/Scripts/MissionKarot.cs"
 "Assets/Scripts/MissionSoif.cs"
 "Assets/Scripts/RabbitManager.cs"

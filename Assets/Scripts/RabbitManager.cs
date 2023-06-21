@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RabbitManager : InteractableAnimal
 {
@@ -37,6 +38,8 @@ public class RabbitManager : InteractableAnimal
 
     public DialogueManager dialogueManager;
     public StagManager stagManager;
+    public RenderTexture setTextureRenderer;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -49,6 +52,8 @@ public class RabbitManager : InteractableAnimal
         missions.Enqueue(new MissionKarot(this, dialogueManager, stagManager));
         missions.Enqueue(new MissionSoif(this, dialogueManager, stagManager));
         currentMission = missions.Dequeue();
+
+        textureRenderer = setTextureRenderer;
     }
 
     // Update is called once per frame

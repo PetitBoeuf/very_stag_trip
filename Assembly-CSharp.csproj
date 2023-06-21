@@ -62,11 +62,12 @@
     <Compile Include="Assets\Scripts\IMission.cs" />
     <Compile Include="Assets\Scripts\InteractableAnimal.cs" />
     <Compile Include="Assets\Scripts\RabbitManager.cs" />
+    <Compile Include="Assets\Scripts\BiomeScript.cs" />
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\MissionSoif.cs" />
     <Compile Include="Assets\Scripts\StagManager.cs" />
+    <Compile Include="Assets\Scripts\MinimapCam_Movement.cs" />
     <Compile Include="Assets\Scripts\WorldManager.cs" />
-    <Compile Include="Assets\Scripts\BiomeScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
