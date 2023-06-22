@@ -69,44 +69,44 @@ public class StagManager : InteractableAnimal
         //stagTransform = GetComponent<Transform>();
         stagAnimator = GetComponent<Animator>();
 
-        stagDialogs = new Queue<Dialogue>();
-        //talkingBool = false;
-        //canTalk = true;
+        //stagDialogs = new Queue<Dialogue>();
+        ////talkingBool = false;
+        ////canTalk = true;
 
-        stagDialogs.Enqueue(
-            new Dialogue(
-                rabbitScript,
-                rabbitTransform,
-                new List<string[]>()
-                    {
-                        new string[] { stagName, "Salut petit lapin !" },
-                        new string[] { rabbitScript.rabbitName, "J'ai faim.." },
-                        new string[] { stagName, "Ah zut ! Je peux t'aider peut-être? " },
-                        new string[] { rabbitScript.rabbitName, "J'ai soif... " },
-                        new string[] { stagName, "Euh..oui j'ai cru comprendre que t'étais dans le besoin oui... " },
-                        new string[] { rabbitScript.rabbitName, "QU'ON ME DONNE UNE KAROT AAAAA " },
-                        new string[] { stagName, "Bon, je vais voir ce que je peux faire.." },
-                        new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAA" }
-                    }
-                )
-        );
-        stagDialogs.Enqueue(
-            new Dialogue(
-                rabbitScript,
-                rabbitTransform,
-                new List<string[]>()
-                    {
-                         new string[] { stagName, "Bon, reuh !" },
-                        new string[] { rabbitScript.rabbitName, "J'ai toujours faaaaim.." },
-                        new string[] { stagName, "Mais je viens de te filer la plus grosse carotte de la forêt ! " },
-                        new string[] { rabbitScript.rabbitName, "Mais j'ai toujours faaaaaaaim... " },
-                        new string[] { stagName, "Est-ce qu'il y aurait quelque chose dans cette forêt qui pourrait te satisfaire au moins ?" },
-                        new string[] { rabbitScript.rabbitName, "KAROOOOOOOOOOOOOOOOOOOOOOOOOOOT" },
-                        new string[] { stagName, "...." },
-                        new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
-                    }
-                )
-            );
+        //stagDialogs.Enqueue(
+        //    new Dialogue(
+        //        rabbitScript,
+        //        rabbitTransform,
+        //        new List<string[]>()
+        //            {
+        //                new string[] { stagName, "Salut petit lapin !" },
+        //                new string[] { rabbitScript.rabbitName, "J'ai faim.." },
+        //                new string[] { stagName, "Ah zut ! Je peux t'aider peut-être? " },
+        //                new string[] { rabbitScript.rabbitName, "J'ai soif... " },
+        //                new string[] { stagName, "Euh..oui j'ai cru comprendre que t'étais dans le besoin oui... " },
+        //                new string[] { rabbitScript.rabbitName, "QU'ON ME DONNE UNE KAROT AAAAA " },
+        //                new string[] { stagName, "Bon, je vais voir ce que je peux faire.." },
+        //                new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAA" }
+        //            }
+        //        )
+        //);
+        //stagDialogs.Enqueue(
+        //    new Dialogue(
+        //        rabbitScript,
+        //        rabbitTransform,
+        //        new List<string[]>()
+        //            {
+        //                 new string[] { stagName, "Bon, reuh !" },
+        //                new string[] { rabbitScript.rabbitName, "J'ai toujours faaaaim.." },
+        //                new string[] { stagName, "Mais je viens de te filer la plus grosse carotte de la forêt ! " },
+        //                new string[] { rabbitScript.rabbitName, "Mais j'ai toujours faaaaaaaim... " },
+        //                new string[] { stagName, "Est-ce qu'il y aurait quelque chose dans cette forêt qui pourrait te satisfaire au moins ?" },
+        //                new string[] { rabbitScript.rabbitName, "KAROOOOOOOOOOOOOOOOOOOOOOOOOOOT" },
+        //                new string[] { stagName, "...." },
+        //                new string[] { rabbitScript.rabbitName, "AAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+        //            }
+        //        )
+        //    );
     }
 
     // Update is called once per frame

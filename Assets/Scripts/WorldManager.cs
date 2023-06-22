@@ -3,6 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+public class UiMission
+{
+    public GameObject MissionParent { get; set; }
+    public RawImage MissionRI { get; set; }
+    public TextMeshProUGUI MissionPNJName { get; set; }
+    public TextMeshProUGUI MissionPNJBiome { get; set; }
+    public TextMeshProUGUI MissionPNJDesc{ get; set; }
+
+    public UiMission(GameObject missionParent, RawImage missionRI, TextMeshProUGUI missionPNJName, TextMeshProUGUI missionPNJBiome, TextMeshProUGUI missionPNJDesc)
+    {
+        MissionParent = missionParent;
+        MissionRI = missionRI;
+        MissionPNJName = missionPNJName;
+        MissionPNJBiome = missionPNJBiome;
+        MissionPNJDesc = missionPNJDesc;
+    }
+}
+
 
 public class WorldManager : MonoBehaviour
 {
@@ -21,12 +39,61 @@ public class WorldManager : MonoBehaviour
 
     public RawImage iaRawImage;
 
+    [Header("Stored Mission : 1")]
+    public GameObject MissionParent1;
+    public RawImage Mission1RI;
+    public TextMeshProUGUI MissionPNJName;
+    public TextMeshProUGUI MissionPNJBiome;
+    public TextMeshProUGUI MissionPNJDesc;
+
+    [Header("Stored Mission : 2")]
+    public GameObject MissionParent2;
+    public RawImage Mission2RI;
+    public TextMeshProUGUI Mission2PNJName;
+    public TextMeshProUGUI Mission2PNJBiome;
+    public TextMeshProUGUI Mission2PNJDesc;
+
+    [Header("Stored Mission : 3")]
+    public GameObject MissionParent3;
+    public RawImage Mission3RI;
+    public TextMeshProUGUI Mission3PNJName;
+    public TextMeshProUGUI Mission3PNJBiome;
+    public TextMeshProUGUI Mission3PNJDesc;
+
+    [Header("Stored Mission : 4")]
+    public GameObject MissionParent4;
+    public RawImage Mission4RI;
+    public TextMeshProUGUI Mission4PNJName;
+    public TextMeshProUGUI Mission4PNJBiome;
+    public TextMeshProUGUI Mission4PNJDesc;
+
+    public List<UiMission> uiMissions;
+    public int uiMissionIndex;
+
+
     // Start is called before the first frame update
     void Start()
     {
         goingDialog = false;
         canInteract = false;
         nearbyIAnimalText.text = "";
+
+        uiMissionIndex = 0;
+        uiMissions = new List<UiMission>()
+        {
+            new UiMission(
+                MissionParent1, Mission1RI, MissionPNJName, MissionPNJBiome, MissionPNJDesc
+                ),
+            new UiMission(
+                MissionParent2, Mission2RI, Mission2PNJName, Mission2PNJBiome, Mission2PNJDesc
+                ),
+            new UiMission(
+                MissionParent3, Mission3RI, Mission3PNJName, Mission3PNJBiome, Mission3PNJDesc
+                ),
+            new UiMission(
+                MissionParent4, Mission4RI, Mission4PNJName, Mission4PNJBiome, Mission4PNJDesc
+                ),
+        };
     }
 
     // Update is called once per frame
@@ -37,11 +104,43 @@ public class WorldManager : MonoBehaviour
             if (!goingDialog)
             {
                 currentDialogSentences = interactableAnimal.currentMission.HandleMission();
+                
+                
+                if(interactableAnimal.currentMission.missionState == MissionState.Started) {
+                    //add mission to ui
+                    uiMissions[uiMissionIndex].MissionParent.SetActive(true);
+                    uiMissions[uiMissionIndex].MissionRI.texture = interactableAnimal.textureRenderer;
+                    uiMissions[uiMissionIndex].MissionPNJName.text = interactableAnimal.animalName;
+                    uiMissions[uiMissionIndex].MissionPNJBiome.text = interactableAnimal.currentMission.biome;
+                    uiMissions[uiMissionIndex].MissionPNJDesc.text = interactableAnimal.currentMission.description;
+
+                    uiMissionIndex++;
+                }
+                if(interactableAnimal.currentMission.missionState == MissionState.Success)
+                {
+                    //sort by title
+                    //get index
+                    //remove mission by foundIndex
+
+                    //refreshui()
+
+                    //uiMissionIndex--;
+
+
+                    //remove mission from ui
+                    uiMissionIndex--;
+
+                    uiMissions[uiMissionIndex].MissionParent.SetActive(false);
+                    uiMissions[uiMissionIndex].MissionRI.texture = null;
+                    uiMissions[uiMissionIndex].MissionPNJName.text = "";
+                    uiMissions[uiMissionIndex].MissionPNJBiome.text = "";
+                    uiMissions[uiMissionIndex].MissionPNJDesc.text = "";
+                }
+
                 dialogueManager.ConfigureDialogue(currentDialogSentences);
                 goingDialog = dialogueManager.DisplayNextSentence();
                 interactableAnimal.MoveToStagForward();
                 interactableAnimal.AbleDisableMovement(goingDialog);
-
                 return;
             }
 
@@ -72,6 +171,11 @@ public class WorldManager : MonoBehaviour
         }
         else
         {
+            //if(uiMissionIndex == 4)
+            //{
+            //    Debug.Log("Trop de missions");
+            //    return;
+            //}
             canInteract = true;
 
             if (nearInteractables.Length == 1)

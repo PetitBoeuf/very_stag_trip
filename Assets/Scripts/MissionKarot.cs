@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class MissionKarot : IMission
 {
+    public string title { get; set; }
+    public string description { get; set; }
+    public string biome { get; set; }
     public InteractableAnimal interactableAnimal { get; set; }
     public DialogueManager dialogueManager { get; set; }
     public MissionState missionState { get; set; }
@@ -14,14 +17,16 @@ public class MissionKarot : IMission
     public List<string[]> successSentences { get; set; }
     public bool startedDialogue { get; set; }
 
-    //Problème : comment accéder d'ici au dialoguemanager
-
     public MissionKarot(
         InteractableAnimal interactableAnimal, 
         DialogueManager dialogueManager, 
         StagManager stagManager
         )
     {
+        this.title = "A la recherche d'une Karot";
+        this.title = "Carottino a besoin d'une Karot, trouve la si tu ne veux pas avoir sa mort dans te conscience.";
+        this.biome = "Prairie des Carottes";
+
         this.interactableAnimal = interactableAnimal;
         this.dialogueManager = dialogueManager;
         this.stagManager = stagManager;

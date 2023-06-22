@@ -11,6 +11,9 @@ public enum MissionState
 
 public interface IMission
 {
+    string title { get; set; }
+    string description { get; set; }
+    string biome { get; set; }
     InteractableAnimal interactableAnimal { get; set; }
 
     StagManager stagManager { get; set; }

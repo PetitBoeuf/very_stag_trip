@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class MissionSoif : IMission
 {
+    public string title { get; set; }
+    public string description { get; set; }
+    public string biome { get; set; }
     public InteractableAnimal interactableAnimal { get; set; }
     public DialogueManager dialogueManager { get; set; }
     public MissionState missionState { get; set; }
@@ -22,6 +25,9 @@ public class MissionSoif : IMission
         StagManager stagManager
         )
     {
+        this.title = "A la recherche d'un point d'eau";
+        this.description = "Carottino meurt visiblement de soif, trouve un point d'eau si tu ne veux toujours pas avoir sa mort dans te conscience.";
+        this.biome = "Pôle de la justice";
         this.interactableAnimal = interactableAnimal;
         this.dialogueManager = dialogueManager;
         this.stagManager = stagManager;
@@ -34,17 +40,19 @@ public class MissionSoif : IMission
             new string[] { stagManager.stagName, "Décidément.. " },
             new string[] { interactableAnimal.animalName, "Mais tu ne peux pas comprendre ! J'ai 67 ans moi mon petit cerf, j'ai passé la belle époque !" },
             new string[] { stagManager.stagName, "Oui oui, bon, qu'est-ce que je peux faire pour toi? " },
-            new string[] { interactableAnimal.animalName, "DE L'EAUUUUUUUUU" }
+            new string[] { interactableAnimal.animalName, "DE L'EAUUUUUUUUUUU" }
         };
 
         failureSentences = new List<string[]>()
         {
-            new string[] { interactableAnimal.animalName, "Alors ? Tu as trouvé mon petit plan d'eau ??" },
+            new string[] { interactableAnimal.animalName, "Alors ? Tu as trouvé mon petit point d'eau ??" },
             new string[] { interactableAnimal.animalName, "..." },
             new string[] { interactableAnimal.animalName, "Comment ça non??" },
             new string[] { interactableAnimal.animalName, "Et bien écoute pas grave t'auras la mort du grand Carottino dans la conscience.." },
-            new string[] { stagManager.stagName, "Mais t'as fini avec ça oui !Roh... " },
-            new string[] { interactableAnimal.animalName, "DE L'EAUUUUUUUUUUU" }
+            new string[] { stagManager.stagName, "Mais t'as fini avec ça oui... " },
+            new string[] { interactableAnimal.animalName, "DE L'EAUUUUUUUUUUU" },
+            new string[] { stagManager.stagName, "(⊙_⊙;)" },
+
         };
 
         successSentences = new List<string[]>()
