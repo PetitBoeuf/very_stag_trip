@@ -9,8 +9,8 @@ public class InteractableAnimal : MonoBehaviour
     public bool goingDialog { get; set; }
     public RenderTexture textureRenderer { get; set; }
 
-    protected Queue<IMission> missions;
-    protected Queue<IMission> succeededMissions;
+    public Queue<IMission> missions { get; set; }
+    public Queue<IMission> succeededMissions { get; set; }
     public IMission currentMission { get; set; }
     public virtual void MoveToStagForward() { }
     public virtual void AbleDisableMovement(bool p_goingDialog) { }

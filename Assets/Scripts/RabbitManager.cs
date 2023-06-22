@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class RabbitManager : InteractableAnimal
 {
@@ -40,20 +42,27 @@ public class RabbitManager : InteractableAnimal
     public DialogueManager dialogueManager;
     public StagManager stagManager;
     public RenderTexture setTextureRenderer;
+    public Queue<IMission> rabbitMissions;
+
+    //public SharedMissionCollection sharedMissionCollection;
 
     void Start()
     {
+        //sharedMissionCollection = GetComponent<SharedMissionCollection>();
+
         rb = GetComponent<Rigidbody>();
         rabbitAnimator = GetComponent<Animator>();
         //rabbitName = "Carottino";
         animalName = rabbitName;
         //talkingBool = false;
-        missions = new Queue<IMission>();
+        missions = new Queue<IMission>() ;
         succeededMissions = new Queue<IMission>();
+
         missions.Enqueue(new MissionKarot(this, dialogueManager, stagManager));
         missions.Enqueue(new MissionSoif(this, dialogueManager, stagManager));
-        currentMission = missions.Dequeue();
 
+
+        currentMission = missions.Dequeue();
         textureRenderer = setTextureRenderer;
     }
 
@@ -112,19 +121,6 @@ public class RabbitManager : InteractableAnimal
     }
     public override void MoveToStagForward()
     {
-        //Vector3 jumpDirection = stagTransform.forward + stagTransform.position;
-
-        //jumpDirection.y = 1;
-
-        //rb.AddForce(jumpDirection, ForceMode.Impulse);
-
-        //isJumping = true;
-        //isFalling = false;
-        //rabbitAnimator.SetBool("Jumping", isJumping);
-        //rabbitAnimator.SetBool("Falling", isFalling);
-
-        //Debug.Log(stagTransform.position);
-        //Debug.Log(stagTransform.position + stagOrientationTransform.forward);
         transform.position = stagTransform.forward * 10 + stagTransform.position;
 
         //Quaternion destStagRotation = Quaternion.LookRotation(transform.position - stagTransform.position, Vector3.up);
@@ -134,7 +130,6 @@ public class RabbitManager : InteractableAnimal
         transform.rotation = Quaternion.RotateTowards(transform.rotation, destRabbitRotation, rabbitRotationFactor);
 
         //stagTransform.rotation = Quaternion.RotateTowards(stagTransform.rotation, destStagRotation, rabbitRotationFactor);
-
     }
 
     public override void DequeueMission()
@@ -142,7 +137,6 @@ public class RabbitManager : InteractableAnimal
         succeededMissions.Enqueue(currentMission);
         if(missions.Count > 0)
             currentMission = missions.Dequeue();
-
     }
 
     public override void AbleDisableMovement(bool p_goingDialog)

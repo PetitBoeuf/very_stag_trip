@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +12,7 @@ public class UiMission
     public TextMeshProUGUI MissionPNJName { get; set; }
     public TextMeshProUGUI MissionPNJBiome { get; set; }
     public TextMeshProUGUI MissionPNJDesc{ get; set; }
+    public string MissionTitle { get; set; }
 
     public UiMission(GameObject missionParent, RawImage missionRI, TextMeshProUGUI missionPNJName, TextMeshProUGUI missionPNJBiome, TextMeshProUGUI missionPNJDesc)
     {
@@ -104,37 +107,32 @@ public class WorldManager : MonoBehaviour
             if (!goingDialog)
             {
                 currentDialogSentences = interactableAnimal.currentMission.HandleMission();
-                
-                
+
                 if(interactableAnimal.currentMission.missionState == MissionState.Started) {
                     //add mission to ui
-                    uiMissions[uiMissionIndex].MissionParent.SetActive(true);
-                    uiMissions[uiMissionIndex].MissionRI.texture = interactableAnimal.textureRenderer;
-                    uiMissions[uiMissionIndex].MissionPNJName.text = interactableAnimal.animalName;
-                    uiMissions[uiMissionIndex].MissionPNJBiome.text = interactableAnimal.currentMission.biome;
-                    uiMissions[uiMissionIndex].MissionPNJDesc.text = interactableAnimal.currentMission.description;
 
-                    uiMissionIndex++;
+                    int foundMissionIndex = uiMissions.FindIndex(uim => uim.MissionTitle == null);
+
+                    uiMissions[foundMissionIndex].MissionParent.SetActive(true);
+                    uiMissions[foundMissionIndex].MissionRI.texture = interactableAnimal.textureRenderer;
+                    uiMissions[foundMissionIndex].MissionPNJName.text = interactableAnimal.animalName;
+                    uiMissions[foundMissionIndex].MissionPNJBiome.text = interactableAnimal.currentMission.biome;
+                    uiMissions[foundMissionIndex].MissionPNJDesc.text = interactableAnimal.currentMission.description;
+                    uiMissions[foundMissionIndex].MissionTitle = interactableAnimal.currentMission.title;
                 }
-                if(interactableAnimal.currentMission.missionState == MissionState.Success)
+
+                if(interactableAnimal.currentMission.missionState == MissionState.Sleep)
+                    //Test with "Sleep" state because when we check after the HandleMission -> a "Sleep" state on a mission means another one has started to sleep (which means that the former one has been completed successfully)
                 {
-                    //sort by title
-                    //get index
-                    //remove mission by foundIndex
+                    
+                    int foundMissionIndex = uiMissions.FindIndex(uim => uim.MissionTitle == interactableAnimal.succeededMissions.Last<IMission>().title);
 
-                    //refreshui()
+                    uiMissions[foundMissionIndex].MissionParent.SetActive(false);
+                    uiMissions[foundMissionIndex].MissionRI.texture = null;
+                    uiMissions[foundMissionIndex].MissionPNJName.text = "";
+                    uiMissions[foundMissionIndex].MissionPNJBiome.text = "";
+                    uiMissions[foundMissionIndex].MissionPNJDesc.text = "";
 
-                    //uiMissionIndex--;
-
-
-                    //remove mission from ui
-                    uiMissionIndex--;
-
-                    uiMissions[uiMissionIndex].MissionParent.SetActive(false);
-                    uiMissions[uiMissionIndex].MissionRI.texture = null;
-                    uiMissions[uiMissionIndex].MissionPNJName.text = "";
-                    uiMissions[uiMissionIndex].MissionPNJBiome.text = "";
-                    uiMissions[uiMissionIndex].MissionPNJDesc.text = "";
                 }
 
                 dialogueManager.ConfigureDialogue(currentDialogSentences);
@@ -210,3 +208,4 @@ public class WorldManager : MonoBehaviour
 
 
 }
+

@@ -24,7 +24,7 @@ public class MissionKarot : IMission
         )
     {
         this.title = "A la recherche d'une Karot";
-        this.title = "Carottino a besoin d'une Karot, trouve la si tu ne veux pas avoir sa mort dans te conscience.";
+        this.description = "Carottino a besoin d'une Karot, trouve la si tu ne veux pas avoir sa mort dans te conscience.";
         this.biome = "Prairie des Carottes";
 
         this.interactableAnimal = interactableAnimal;
@@ -48,7 +48,7 @@ public class MissionKarot : IMission
         failureSentences = new List<string[]>()
         {
             new string[] { interactableAnimal.animalName, "Oh ! Tu es revenu avec une Karot ??" },
-            new string[] { interactableAnimal.animalName, "..." },
+            new string[] { stagManager.stagName, "Non..je suis désolé.." },
             new string[] { interactableAnimal.animalName, "Comment ça non??" },
             new string[] { interactableAnimal.animalName, "Et bien écoute pas grave t'auras la mort du grand Carottino dans la conscience.." },
             new string[] { stagManager.stagName, "Super..merci la culpabilité.. " },

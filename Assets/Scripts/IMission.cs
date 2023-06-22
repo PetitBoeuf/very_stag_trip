@@ -8,16 +8,13 @@ public enum MissionState
     Failed,
     Success,
 };
-
 public interface IMission
 {
     string title { get; set; }
     string description { get; set; }
     string biome { get; set; }
     InteractableAnimal interactableAnimal { get; set; }
-
     StagManager stagManager { get; set; }
-
     MissionState missionState { get; set; }
     DialogueManager dialogueManager { get; set; }
     List<string[]> startSentences { get; set; }

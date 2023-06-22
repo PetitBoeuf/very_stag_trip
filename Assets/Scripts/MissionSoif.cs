@@ -26,7 +26,7 @@ public class MissionSoif : IMission
         )
     {
         this.title = "A la recherche d'un point d'eau";
-        this.description = "Carottino meurt visiblement de soif, trouve un point d'eau si tu ne veux toujours pas avoir sa mort dans te conscience.";
+        this.description = "Carottino meurt visiblement de soif, trouve un point d'eau si tu ne veux toujours pas avoir sa mort sur la conscience.";
         this.biome = "Pôle de la justice";
         this.interactableAnimal = interactableAnimal;
         this.dialogueManager = dialogueManager;
