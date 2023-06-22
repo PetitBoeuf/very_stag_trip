@@ -59,7 +59,7 @@ public class StagManager : InteractableAnimal
     private Dialogue currentDialog;
     public DialogueManager dialogueManager;
     //private bool canTalk;
-    private bool talkingBool;
+    //private bool talkingBool;
     private Queue<Dialogue> stagDialogs;
     // Start is called before the first frame update
     void Start()
@@ -70,7 +70,7 @@ public class StagManager : InteractableAnimal
         stagAnimator = GetComponent<Animator>();
 
         stagDialogs = new Queue<Dialogue>();
-        talkingBool = false;
+        //talkingBool = false;
         //canTalk = true;
 
         stagDialogs.Enqueue(

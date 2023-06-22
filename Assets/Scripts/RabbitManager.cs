@@ -30,11 +30,12 @@ public class RabbitManager : InteractableAnimal
 
     [Header("Dialog Settings")]
     [SerializeField]
-    private bool talkingBool;
+    //private bool talkingBool;
     public string rabbitName;
 
     [Header("Stag")]
     public Transform stagTransform;
+    public Transform stagOrientationTransform;
 
     public DialogueManager dialogueManager;
     public StagManager stagManager;
@@ -46,7 +47,7 @@ public class RabbitManager : InteractableAnimal
         rabbitAnimator = GetComponent<Animator>();
         //rabbitName = "Carottino";
         animalName = rabbitName;
-        talkingBool = false;
+        //talkingBool = false;
         missions = new Queue<IMission>();
         succeededMissions = new Queue<IMission>();
         missions.Enqueue(new MissionKarot(this, dialogueManager, stagManager));
@@ -109,6 +110,33 @@ public class RabbitManager : InteractableAnimal
         
         #endregion
     }
+    public override void MoveToStagForward()
+    {
+        //Vector3 jumpDirection = stagTransform.forward + stagTransform.position;
+
+        //jumpDirection.y = 1;
+
+        //rb.AddForce(jumpDirection, ForceMode.Impulse);
+
+        //isJumping = true;
+        //isFalling = false;
+        //rabbitAnimator.SetBool("Jumping", isJumping);
+        //rabbitAnimator.SetBool("Falling", isFalling);
+
+        //Debug.Log(stagTransform.position);
+        //Debug.Log(stagTransform.position + stagOrientationTransform.forward);
+        transform.position = stagTransform.forward * 10 + stagTransform.position;
+
+        //Quaternion destStagRotation = Quaternion.LookRotation(transform.position - stagTransform.position, Vector3.up);
+
+        Quaternion destRabbitRotation = Quaternion.LookRotation(stagTransform.position - transform.position, Vector3.up);
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, destRabbitRotation, rabbitRotationFactor);
+
+        //stagTransform.rotation = Quaternion.RotateTowards(stagTransform.rotation, destStagRotation, rabbitRotationFactor);
+
+    }
+
     public override void DequeueMission()
     {
         succeededMissions.Enqueue(currentMission);

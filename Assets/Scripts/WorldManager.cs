@@ -32,16 +32,37 @@ public class WorldManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Return) && canInteract) //&& there is a near ennemy
+        {
+            if (!goingDialog)
+            {
+                currentDialogSentences = interactableAnimal.currentMission.HandleMission();
+                dialogueManager.ConfigureDialogue(currentDialogSentences);
+                goingDialog = dialogueManager.DisplayNextSentence();
+                interactableAnimal.MoveToStagForward();
+                interactableAnimal.AbleDisableMovement(goingDialog);
+
+                return;
+            }
+
+            goingDialog = dialogueManager.DisplayNextSentence();
+            interactableAnimal.AbleDisableMovement(goingDialog);
+            return;
+        }
+
+
+        if(goingDialog) return;
+
         //Fonctionnement 1
         //Fonctionnement entre stagManager et worldManager
-        //Référence dans le stagManager du worldmanager
+        //Rï¿½fï¿½rence dans le stagManager du worldmanager
         //Trigger d'un spherecollider dans le stag
-        //Quand trigger prcq le cerf a collisionné un truc => ajouter, via le worldmanager du stagmanager, le collider dans une liste de colliders de wolrdManager
-        // Puis, ici, continuellement faire une vérification du collider le plus proche et si il y en a aucun mettre le bool à false etc
+        //Quand trigger prcq le cerf a collisionnï¿½ un truc => ajouter, via le worldmanager du stagmanager, le collider dans une liste de colliders de wolrdManager
+        // Puis, ici, continuellement faire une vï¿½rification du collider le plus proche et si il y en a aucun mettre le bool ï¿½ false etc
         
 
         //F2
-        //Overlap sphere et vérification continue des colliders les plus proches avec le layer interactable
+        //Overlap sphere et vï¿½rification continue des colliders les plus proches avec le layer interactable
         Collider[] nearInteractables = Physics.OverlapSphere(stagTransform.position, overlapSphereRadius, interactableLayer);
 
         if (nearInteractables.Length == 0)
@@ -58,27 +79,11 @@ public class WorldManager : MonoBehaviour
             else
                 interactableAnimal = FindNearestIAnimal(nearInteractables);
 
-            iaRawImage.texture = interactableAnimal.textureRenderer;
+            //Debug.Log(interactableAnimal.animalName);
+            //Debug.Log(nearbyIAnimalText.text);
             nearbyIAnimalText.text = interactableAnimal.animalName;
+            iaRawImage.texture = interactableAnimal.textureRenderer;
         }
-
-
-        if (Input.GetKeyDown(KeyCode.Return) && canInteract) //&& there is a near ennemy
-        {
-            if (!goingDialog)
-            {
-                currentDialogSentences = interactableAnimal.currentMission.HandleMission();
-                dialogueManager.ConfigureDialogue(currentDialogSentences);
-                goingDialog = dialogueManager.DisplayNextSentence();
-                interactableAnimal.AbleDisableMovement(goingDialog);
-                return;
-            }
-
-            goingDialog = dialogueManager.DisplayNextSentence();
-            interactableAnimal.AbleDisableMovement(goingDialog);
-            return;
-        }
-
     }
 
     InteractableAnimal FindNearestIAnimal(Collider[] nearInteractables)

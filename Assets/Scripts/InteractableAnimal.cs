@@ -12,6 +12,7 @@ public class InteractableAnimal : MonoBehaviour
     protected Queue<IMission> missions;
     protected Queue<IMission> succeededMissions;
     public IMission currentMission { get; set; }
+    public virtual void MoveToStagForward() { }
     public virtual void AbleDisableMovement(bool p_goingDialog) { }
 
     public virtual void DequeueMission() { }
