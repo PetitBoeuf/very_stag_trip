@@ -42,8 +42,9 @@ public class RabbitManager : InteractableAnimal
     public DialogueManager dialogueManager;
     public StagManager stagManager;
     public RenderTexture setTextureRenderer;
-    public Queue<IMission> rabbitMissions;
+    public Queue<SOMission> rabbitMissions;
 
+    public List<SOMission> soMissions;
     //public SharedMissionCollection sharedMissionCollection;
 
     void Start()
@@ -55,11 +56,17 @@ public class RabbitManager : InteractableAnimal
         //rabbitName = "Carottino";
         animalName = rabbitName;
         //talkingBool = false;
-        missions = new Queue<IMission>() ;
-        succeededMissions = new Queue<IMission>();
+        missions = new Queue<SOMission>();
 
-        missions.Enqueue(new MissionKarot(this, dialogueManager, stagManager));
-        missions.Enqueue(new MissionSoif(this, dialogueManager, stagManager));
+        foreach(SOMission som in soMissions)
+        {
+            missions.Enqueue(som);
+        }
+        //missions = soMissions;
+        succeededMissions = new Queue<SOMission>();
+
+        //missions.Enqueue(new MissionKarot(this, dialogueManager, stagManager));
+        //missions.Enqueue(new MissionSoif(this, dialogueManager, stagManager));
 
 
         currentMission = missions.Dequeue();

@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class SharedMissionCollection : ScriptableObject
 {
-    public IMission[] missions;
+    public SOMission[] missions;
 }

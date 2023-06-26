@@ -124,8 +124,12 @@ public class WorldManager : MonoBehaviour
                 if(interactableAnimal.currentMission.missionState == MissionState.Sleep)
                     //Test with "Sleep" state because when we check after the HandleMission -> a "Sleep" state on a mission means another one has started to sleep (which means that the former one has been completed successfully)
                 {
+
+
+                    //try to interactableAnimal.DequeueMission() here
+                    //therefore removing l.48 in ScriptableObject and removing interactableAnimal link in SO (Two-way link deprecated)
                     
-                    int foundMissionIndex = uiMissions.FindIndex(uim => uim.MissionTitle == interactableAnimal.succeededMissions.Last<IMission>().title);
+                    int foundMissionIndex = uiMissions.FindIndex(uim => uim.MissionTitle == interactableAnimal.succeededMissions.Last<SOMission>().title);
 
                     uiMissions[foundMissionIndex].MissionParent.SetActive(false);
                     uiMissions[foundMissionIndex].MissionRI.texture = null;
@@ -166,6 +170,7 @@ public class WorldManager : MonoBehaviour
         {
             canInteract = false;
             nearbyIAnimalText.text = "";
+            interactableAnimal = null;
         }
         else
         {

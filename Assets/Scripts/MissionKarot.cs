@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-public class MissionKarot : IMission
+//[CreateAssetMenu(fileName = "__", menuName = "Missions/MissionKarot")]
+public class MissionKarot : SOMission
 {
-    public string title { get; set; }
-    public string description { get; set; }
-    public string biome { get; set; }
-    public InteractableAnimal interactableAnimal { get; set; }
-    public DialogueManager dialogueManager { get; set; }
-    public MissionState missionState { get; set; }
-    public StagManager stagManager { get; set; } 
-    public List<string[]> startSentences { get; set; }
-    public List<string[]> failureSentences { get; set; }
-    public List<string[]> successSentences { get; set; }
-    public bool startedDialogue { get; set; }
+    //public string title { get; set; }
+    //public string description { get; set; }
+    //public string biome { get; set; }
+    //public InteractableAnimal interactableAnimal { get; set; }
+    //public DialogueManager dialogueManager { get; set; }
+    //public MissionState missionState { get; set; }
+    //public StagManager stagManager { get; set; } 
+    //public List<string[]> startSentences { get; set; }
+    //public List<string[]> failureSentences { get; set; }
+    //public List<string[]> successSentences { get; set; }
+    //public bool startedDialogue { get; set; }
 
     public MissionKarot(
         InteractableAnimal interactableAnimal, 
@@ -77,36 +78,36 @@ public class MissionKarot : IMission
     //            return successSentences;
     //    }
     //}
-    public List<string[]> HandleMission()
-    {
-        List<string[]> returnedSentences = new List<string[]>();
+    //public override List<string[]> HandleMission()
+    //{
+    //    List<string[]> returnedSentences = new List<string[]>();
 
-        switch (missionState)
-        {
-            case MissionState.Sleep:
-                missionState = MissionState.Started;
-                returnedSentences = startSentences;
-                break;
-            case MissionState.Started:
-            case MissionState.Failed:
+    //    switch (missionState)
+    //    {
+    //        case MissionState.Sleep:
+    //            missionState = MissionState.Started;
+    //            returnedSentences = startSentences;
+    //            break;
+    //        case MissionState.Started:
+    //        case MissionState.Failed:
 
-                //Default is set to failure sentences
-                returnedSentences = failureSentences;
+    //            //Default is set to failure sentences
+    //            returnedSentences = failureSentences;
 
-                if (MissionSolved())
-                {
-                    missionState = MissionState.Success;
-                    returnedSentences = successSentences;
-                    interactableAnimal.DequeueMission();
-                }
+    //            if (MissionSolved())
+    //            {
+    //                missionState = MissionState.Success;
+    //                returnedSentences = successSentences;
+    //                interactableAnimal.DequeueMission();
+    //            }
 
-                break;
-        }
-        return returnedSentences;
-    }
+    //            break;
+    //    }
+    //    return returnedSentences;
+    //}
 
-    public bool MissionSolved()
-    {
-        return true;
-    }
+    //public override bool MissionSolved()
+    //{
+    //    return true;
+    //}
 }
