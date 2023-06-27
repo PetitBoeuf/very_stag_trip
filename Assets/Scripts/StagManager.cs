@@ -61,6 +61,7 @@ public class StagManager : InteractableAnimal
     //private bool canTalk;
     //private bool talkingBool;
     private Queue<Dialogue> stagDialogs;
+    public bool openedMinimap;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +69,7 @@ public class StagManager : InteractableAnimal
         //stagGO = GetComponent<GameObject>();
         //stagTransform = GetComponent<Transform>();
         stagAnimator = GetComponent<Animator>();
-
+        openedMinimap = false;
         //stagDialogs = new Queue<Dialogue>();
         ////talkingBool = false;
         ////canTalk = true;
@@ -159,6 +160,7 @@ public class StagManager : InteractableAnimal
         //    return;
         //}
 
+        if(openedMinimap) { return; }
 
         float forwardMovement = Input.GetAxis("Vertical");
         float horizontalMovement = Input.GetAxis("Horizontal");

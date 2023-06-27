@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-//[CreateAssetMenu(fileName = "__", menuName = "Missions/MissionAvocat")]
+[CreateAssetMenu(fileName = "MissionAvocat", menuName = "Missions/MissionAvocat")]
 public class MissionAvocat : SOMission
 {
     //public string title { get; set; }
@@ -18,7 +18,7 @@ public class MissionAvocat : SOMission
     //public List<string[]> successSentences { get; set; }
     //public bool startedDialogue { get; set; }
 
-    public MissionAvocat(
+    public override void InitializeMission(
         InteractableAnimal interactableAnimal,
         DialogueManager dialogueManager,
         StagManager stagManager
@@ -49,24 +49,27 @@ public class MissionAvocat : SOMission
 
         failureSentences = new List<string[]>()
         {
-            new string[] { interactableAnimal.animalName, "Oh coucou toi!" },
-            new string[] { stagManager.stagName, "Salut" },
-            new string[] { interactableAnimal.animalName, "..." },
-            new string[] { interactableAnimal.animalName, "Comment ça non??" },
-            new string[] { interactableAnimal.animalName, "Et bien écoute pas grave t'auras la mort du grand Carottino dans la conscience.." },
-            new string[] { stagManager.stagName, "Super..merci la culpabilité.. " },
-            new string[] { interactableAnimal.animalName, "AAAAAAAAAAAAAAAAAAAAAA" }
+            new string[] { interactableAnimal.animalName, "Oh tu es reviendu !" },
+            new string[] { stagManager.stagName, "Ouais..mais j'ai pas trouvé grand chose." },
+            new string[] { interactableAnimal.animalName, "Ah bon ??? Oh..bah c'est gentil d'avoir essayé en tout cas. Je ne peux m'en vouloir qu'à moi-même de toutes manières.." },
+            new string[] { stagManager.stagName, "Ne dis pas ça ! Allez, je vais continuer de chercher, on va le trouver cet avocat ne t'en fais pas !" },
+            new string[] { interactableAnimal.animalName, "Wow.. Tu es d'une bonté.." },
+            new string[] { stagManager.stagName, "Mais non ! Toi aussi tu aurais fait ça pour moi, non ? " },
+            new string[] { interactableAnimal.animalName, "Ben non.." },
+            new string[] { stagManager.stagName, "Ah." },
         };
 
         successSentences = new List<string[]>()
         {
-            new string[] { stagManager.stagName, "Tiens ! Je t'ai trouvé une Karot !" },
-            new string[] { interactableAnimal.animalName, "Oh mon dieu c'est pas vrai.. mais où l'as tu trouvée ? J'en ai cherché partout !" },
-            new string[] { stagManager.stagName, "Bah écoute, j'en ai trouvé quelques unes à quelques pattes d'ici, mais c'était pas si simple ! C'était en fait bien enfoui sous terre." },
-            new string[] { interactableAnimal.animalName, "Bah oui ! Les Karot ne poussent qu'à des endroits bien précis ! Mais visiblement.. l'âge me ratrappe.. je ne me souviens jamais exactement de l'endroit... en tout cas, je te remercie beaucoup !" },
-            new string[] { stagManager.stagName, "Mais je t'en prie ! Je suis content d'avoir pu t'aider !" },
-            new string[] { interactableAnimal.animalName, "AAAAAAAAAAAAAAAA" },
-            new string[] { stagManager.stagName, "Et c'est reparti...." },
+            new string[] { stagManager.stagName, "Devine qui a trouvé le plus gros Avocat du Pôle de la Justice ? " },
+            new string[] { interactableAnimal.animalName, "Ben je sais pas du tout moi.." },
+            new string[] { stagManager.stagName, "..." },
+            new string[] { stagManager.stagName, "C'est moi !" },
+            new string[] { interactableAnimal.animalName, "Ah bon ?? Je suis trop conteeeeeeeeeeeeeeeent !" },
+            new string[] { stagManager.stagName, "Ah c'est vrai ? " },
+            new string[] { interactableAnimal.animalName, "Bien évidemment j'ai au moins deux fois plus de chances d'éviter de devenir le prochain repas de Big Pom c'est juste merveilleux !" },
+            new string[] { interactableAnimal.animalName, "Merci merci merci merci de m'avoir aidé ! Je te revaudrai ça !" },
+            new string[] { stagManager.stagName, "Ah, euh, ben écoute, je suis ravi d'avoir pu t'aider. A bientôt ! " },
         };
 
     }

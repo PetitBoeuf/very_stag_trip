@@ -60,6 +60,7 @@ public class RabbitManager : InteractableAnimal
 
         foreach(SOMission som in soMissions)
         {
+            som.InitializeMission(this, dialogueManager, stagManager);
             missions.Enqueue(som);
         }
         //missions = soMissions;

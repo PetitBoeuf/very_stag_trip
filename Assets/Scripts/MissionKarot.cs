@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 
-//[CreateAssetMenu(fileName = "__", menuName = "Missions/MissionKarot")]
+[CreateAssetMenu(fileName = "MissionKarot", menuName = "Missions/MissionKarot")]
 public class MissionKarot : SOMission
 {
     //public string title { get; set; }
@@ -18,12 +18,13 @@ public class MissionKarot : SOMission
     //public List<string[]> successSentences { get; set; }
     //public bool startedDialogue { get; set; }
 
-    public MissionKarot(
+    public override void InitializeMission(
         InteractableAnimal interactableAnimal, 
         DialogueManager dialogueManager, 
         StagManager stagManager
         )
     {
+        //Debug.Log("coucou karot");
         this.title = "A la recherche d'une Karot";
         this.description = "Carottino a besoin d'une Karot, trouve la si tu ne veux pas avoir sa mort dans te conscience.";
         this.biome = "Prairie des Carottes";

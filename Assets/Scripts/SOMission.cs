@@ -20,10 +20,15 @@ public class SOMission : ScriptableObject
     public StagManager stagManager;
     public MissionState missionState;
     public DialogueManager dialogueManager;
-    [SerializeField]
     public List<string[]> startSentences;
     public List<string[]> failureSentences;
     public List<string[]> successSentences;
+
+    public virtual void InitializeMission(
+        InteractableAnimal interactableAnimal,
+        DialogueManager dialogueManager,
+        StagManager stagManager
+        ) { }
 
     public List<string[]> HandleMission()
     {
@@ -45,7 +50,7 @@ public class SOMission : ScriptableObject
                 {
                     missionState = MissionState.Success;
                     returnedSentences = successSentences;
-                    interactableAnimal.DequeueMission();
+                    //interactableAnimal.DequeueMission();
                 }
 
                 break;

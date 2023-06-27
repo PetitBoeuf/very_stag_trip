@@ -40,6 +40,8 @@ public class WorldManager : MonoBehaviour
     public TextMeshProUGUI nearbyIAnimalText;
     public Transform stagTransform;
 
+    public Animator MiniMapAnimator;
+
     public RawImage iaRawImage;
 
     [Header("Stored Mission : 1")]
@@ -121,21 +123,19 @@ public class WorldManager : MonoBehaviour
                     uiMissions[foundMissionIndex].MissionTitle = interactableAnimal.currentMission.title;
                 }
 
-                if(interactableAnimal.currentMission.missionState == MissionState.Sleep)
-                    //Test with "Sleep" state because when we check after the HandleMission -> a "Sleep" state on a mission means another one has started to sleep (which means that the former one has been completed successfully)
+                if(interactableAnimal.currentMission.missionState == MissionState.Success)
                 {
 
+                    interactableAnimal.DequeueMission();
 
-                    //try to interactableAnimal.DequeueMission() here
-                    //therefore removing l.48 in ScriptableObject and removing interactableAnimal link in SO (Two-way link deprecated)
-                    
                     int foundMissionIndex = uiMissions.FindIndex(uim => uim.MissionTitle == interactableAnimal.succeededMissions.Last<SOMission>().title);
 
                     uiMissions[foundMissionIndex].MissionParent.SetActive(false);
                     uiMissions[foundMissionIndex].MissionRI.texture = null;
-                    uiMissions[foundMissionIndex].MissionPNJName.text = "";
-                    uiMissions[foundMissionIndex].MissionPNJBiome.text = "";
-                    uiMissions[foundMissionIndex].MissionPNJDesc.text = "";
+                    uiMissions[foundMissionIndex].MissionTitle = null;
+                    uiMissions[foundMissionIndex].MissionPNJName.text = null;
+                    uiMissions[foundMissionIndex].MissionPNJBiome.text = null;
+                    uiMissions[foundMissionIndex].MissionPNJDesc.text = null;
 
                 }
 
@@ -154,6 +154,19 @@ public class WorldManager : MonoBehaviour
 
         if(goingDialog) return;
 
+
+        if (Input.GetKeyDown(KeyCode.M) && !stagScript.openedMinimap) {
+
+            stagScript.openedMinimap = true;
+            MiniMapAnimator.SetBool("Open", true);
+            return;
+        }
+        if((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.M) && stagScript.openedMinimap))
+        {
+            stagScript.openedMinimap = false;
+            MiniMapAnimator.SetBool("Open", false);
+            return;
+        }
         //Fonctionnement 1
         //Fonctionnement entre stagManager et worldManager
         //R�f�rence dans le stagManager du worldmanager
@@ -186,6 +199,8 @@ public class WorldManager : MonoBehaviour
             else
                 interactableAnimal = FindNearestIAnimal(nearInteractables);
 
+            //Debug.Log(nearInteractables);
+            //Debug.Log(interactableAnimal);
             //Debug.Log(interactableAnimal.animalName);
             //Debug.Log(nearbyIAnimalText.text);
             nearbyIAnimalText.text = interactableAnimal.animalName;
