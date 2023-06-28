@@ -10,6 +10,7 @@ public class BiomeScript : MonoBehaviour
     public TextMeshProUGUI biomeText;
     public TextMeshProUGUI biomeLabel;
     public string biomeName;
+    public TextMeshProUGUI biomeMinimapName;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class BiomeScript : MonoBehaviour
     {
         biomeLabel.text = "Biome";
         biomeText.text = biomeName;
+        biomeMinimapName.text = biomeName;
     }
     private void OnTriggerExit(Collider other)
     {

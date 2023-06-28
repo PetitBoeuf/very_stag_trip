@@ -27,6 +27,11 @@ public class UiMission
 
 public class WorldManager : MonoBehaviour
 {
+    public GameObject particlePrefab;
+
+    public Transform plainTerrain;
+    public int numParticles; // Nombre de particules à générer
+
     public StagManager stagScript;
     [SerializeField]
     private InteractableAnimal interactableAnimal;
@@ -99,7 +104,29 @@ public class WorldManager : MonoBehaviour
                 MissionParent4, Mission4RI, Mission4PNJName, Mission4PNJBiome, Mission4PNJDesc
                 ),
         };
+        StartCoroutine(SpawnParticles());
     }
+        private IEnumerator SpawnParticles()
+        {
+            for (int i = 0; i < numParticles; i++)
+            {
+                // Générer une position aléatoire sur le plan 3D
+                Vector3 randomPosition = new Vector3(
+                    Random.Range(plainTerrain.position.x - plainTerrain.localScale.x / 2f, plainTerrain.position.x + plainTerrain.localScale.x / 2f),
+                    Random.Range(plainTerrain.position.y - plainTerrain.localScale.y / 2f, plainTerrain.position.y + plainTerrain.localScale.y / 2f),
+                    Random.Range(plainTerrain.position.z - plainTerrain.localScale.z / 2f, plainTerrain.position.z + plainTerrain.localScale.z / 2f)
+                );
+
+                // Instancier la préfabriquée de système de particules à la position générée
+                GameObject particle = Instantiate(particlePrefab, randomPosition, Quaternion.identity);
+
+                // Facultatif : Assigner le plan 3D comme parent des particules pour les maintenir organisées dans la hiérarchie
+                particle.transform.SetParent(plainTerrain);
+
+                // Attendre un court laps de temps avant de générer la particule suivante
+                yield return new WaitForSeconds(0.1f);
+            }
+        }
 
     // Update is called once per frame
     void Update()
