@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class UiMission
@@ -29,10 +30,18 @@ public class WorldManager : MonoBehaviour
 {
     public GameObject particlePrefab;
 
-    public Transform plainTerrain;
+    public Transform plainTerrainTransf;
+    public Terrain plainTerrain;
+    public Transform windParent;
     public int numParticles; // Nombre de particules à générer
 
     public StagManager stagScript;
+    public Transform stagTransform;
+    public Transform stagOrientation;
+    public TextMeshPro bouffableText;
+    [SerializeField]
+    private Transform alimentBouffable;
+
     [SerializeField]
     private InteractableAnimal interactableAnimal;
     public bool goingDialog;
@@ -42,53 +51,79 @@ public class WorldManager : MonoBehaviour
 
     public int overlapSphereRadius;
     public LayerMask interactableLayer;
+    public LayerMask bouffableLayer;
     public TextMeshProUGUI nearbyIAnimalText;
-    public Transform stagTransform;
 
     public Animator MiniMapAnimator;
 
     public RawImage iaRawImage;
 
+    #region missionUI
     [Header("Stored Mission : 1")]
+    [HideInInspector]
     public GameObject MissionParent1;
+    [HideInInspector]
     public RawImage Mission1RI;
+    [HideInInspector]
     public TextMeshProUGUI MissionPNJName;
+    [HideInInspector]
     public TextMeshProUGUI MissionPNJBiome;
+    [HideInInspector]
     public TextMeshProUGUI MissionPNJDesc;
 
+
     [Header("Stored Mission : 2")]
+    [HideInInspector]
     public GameObject MissionParent2;
+    [HideInInspector]
     public RawImage Mission2RI;
+    [HideInInspector]
     public TextMeshProUGUI Mission2PNJName;
+    [HideInInspector]
     public TextMeshProUGUI Mission2PNJBiome;
+    [HideInInspector]
     public TextMeshProUGUI Mission2PNJDesc;
 
     [Header("Stored Mission : 3")]
+    [HideInInspector]
     public GameObject MissionParent3;
+    [HideInInspector]
     public RawImage Mission3RI;
+    [HideInInspector]
     public TextMeshProUGUI Mission3PNJName;
+    [HideInInspector]
     public TextMeshProUGUI Mission3PNJBiome;
+    [HideInInspector]
     public TextMeshProUGUI Mission3PNJDesc;
 
     [Header("Stored Mission : 4")]
+    [HideInInspector]
     public GameObject MissionParent4;
+    [HideInInspector]
     public RawImage Mission4RI;
+    [HideInInspector]
     public TextMeshProUGUI Mission4PNJName;
+    [HideInInspector]
     public TextMeshProUGUI Mission4PNJBiome;
+    [HideInInspector]
     public TextMeshProUGUI Mission4PNJDesc;
+    #endregion
 
     public List<UiMission> uiMissions;
-    public int uiMissionIndex;
+    private bool canCollect;
+    //public int uiMissionIndex;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        canCollect = false;
         goingDialog = false;
         canInteract = false;
         nearbyIAnimalText.text = "";
+        bouffableText.text = "--";
 
-        uiMissionIndex = 0;
+        //uiMissionIndex = 0;
         uiMissions = new List<UiMission>()
         {
             new UiMission(
@@ -110,27 +145,44 @@ public class WorldManager : MonoBehaviour
         {
             for (int i = 0; i < numParticles; i++)
             {
-                // Générer une position aléatoire sur le plan 3D
+                //random pos
+
+                float MinX = plainTerrainTransf.transform.position.x;
+                float MaxX = plainTerrainTransf.transform.position.x + plainTerrain.terrainData.size.x;
+                float MinZ = plainTerrainTransf.transform.position.z;
+                float MaxZ = plainTerrainTransf.transform.position.z + plainTerrain.terrainData.size.z;
+
+                float randX = Mathf.FloorToInt(Random.Range(MinX, MaxX));
+                float randY = Mathf.Floor(Random.Range(5, 10));
+                float randZ = Mathf.FloorToInt(Random.Range(MinZ, MaxZ));
+
+
                 Vector3 randomPosition = new Vector3(
-                    Random.Range(plainTerrain.position.x - plainTerrain.localScale.x / 2f, plainTerrain.position.x + plainTerrain.localScale.x / 2f),
-                    Random.Range(plainTerrain.position.y - plainTerrain.localScale.y / 2f, plainTerrain.position.y + plainTerrain.localScale.y / 2f),
-                    Random.Range(plainTerrain.position.z - plainTerrain.localScale.z / 2f, plainTerrain.position.z + plainTerrain.localScale.z / 2f)
+                    randX,
+                    randY,
+                    randZ
                 );
 
-                // Instancier la préfabriquée de système de particules à la position générée
                 GameObject particle = Instantiate(particlePrefab, randomPosition, Quaternion.identity);
+                particle.transform.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
 
-                // Facultatif : Assigner le plan 3D comme parent des particules pour les maintenir organisées dans la hiérarchie
-                particle.transform.SetParent(plainTerrain);
+                particle.transform.SetParent(windParent);
 
-                // Attendre un court laps de temps avant de générer la particule suivante
-                yield return new WaitForSeconds(0.1f);
             }
+            yield return null;
         }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E) && canCollect)
+        {
+            stagScript.AddToInventory(alimentBouffable.name.Split(" ")[0]);
+            bouffableText.text = " ";
+            Destroy(alimentBouffable.gameObject);
+            canCollect = false;
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Return) && canInteract) //&& there is a near ennemy
         {
             if (!goingDialog)
@@ -224,7 +276,7 @@ public class WorldManager : MonoBehaviour
             if (nearInteractables.Length == 1)
                 interactableAnimal = nearInteractables[0].gameObject.GetComponent<InteractableAnimal>();
             else
-                interactableAnimal = FindNearestIAnimal(nearInteractables);
+                interactableAnimal = FindNearestCol(nearInteractables).GetComponent<InteractableAnimal>();
 
             //Debug.Log(nearInteractables);
             //Debug.Log(interactableAnimal);
@@ -232,15 +284,40 @@ public class WorldManager : MonoBehaviour
             //Debug.Log(nearbyIAnimalText.text);
             nearbyIAnimalText.text = interactableAnimal.animalName;
             iaRawImage.texture = interactableAnimal.textureRenderer;
+
+            return;
         }
+
+
+        Collider[] nearBouffables = Physics.OverlapSphere(stagTransform.position, overlapSphereRadius, bouffableLayer);
+        //Debug.Log(nearBouffables.Length);
+
+        if(nearBouffables.Length != 0)
+        {
+            if (nearBouffables.Length == 1) alimentBouffable = nearBouffables[0].gameObject.GetComponent<Transform>();
+            if(nearBouffables.Length > 1)
+            {
+                alimentBouffable = FindNearestCol(nearBouffables).GetComponent<Transform>();
+            }
+            Vector3 alimentPos = alimentBouffable.GetComponent<Transform>().position;
+
+            alimentPos.y += 1.5f;
+            canCollect = true;
+
+            bouffableText.GetComponent<RectTransform>().position = alimentPos;
+            bouffableText.text = "<size=10>(E)</size> Ramasser : " + alimentBouffable.name.Split(" ")[0];
+            bouffableText.GetComponent<RectTransform>().forward = stagOrientation.forward;
+            return;
+        }
+
     }
 
-    InteractableAnimal FindNearestIAnimal(Collider[] nearInteractables)
+    GameObject FindNearestCol(Collider[] nearColliders)
     {
         Collider nearest = null;
         float nearestDistance = 9999999f;
 
-        foreach(Collider nearCollider in nearInteractables)
+        foreach(Collider nearCollider in nearColliders)
         {
             float colliderDistance = Vector3.Distance(stagTransform.position, nearCollider.transform.position);
 
@@ -250,7 +327,7 @@ public class WorldManager : MonoBehaviour
             }
         }
 
-        return nearest.gameObject.GetComponent<InteractableAnimal>();
+        return nearest.gameObject;
     }
 
 

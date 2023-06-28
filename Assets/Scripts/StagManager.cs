@@ -55,6 +55,15 @@ public class StagManager : InteractableAnimal
     public RabbitManager rabbitScript;
     public Transform rabbitTransform;
 
+    public TextMeshProUGUI karrotCounter;
+    public TextMeshProUGUI carrotCounter;
+    public TextMeshProUGUI turnipCounter;
+    public TextMeshProUGUI avocadoCounter;
+
+    private int intKarrotCounter;
+    private int intCarrotCounter;
+    private int intTurnipCounter;
+    private int intAvocadoCounter;
     [Header("Dialog Settings")]
     private Dialogue currentDialog;
     public DialogueManager dialogueManager;
@@ -65,6 +74,16 @@ public class StagManager : InteractableAnimal
     // Start is called before the first frame update
     void Start()
     {
+        intKarrotCounter = 0;
+        intCarrotCounter = 0;
+        intTurnipCounter = 0;
+        intAvocadoCounter = 0;
+        karrotCounter.text = "x" + intKarrotCounter.ToString();
+        carrotCounter.text = "x" + intCarrotCounter.ToString();
+        turnipCounter.text = "x" + intTurnipCounter.ToString();
+        avocadoCounter.text = "x" + intAvocadoCounter.ToString();
+
+
         stagRb = GetComponent<Rigidbody>();
         //stagGO = GetComponent<GameObject>();
         //stagTransform = GetComponent<Transform>();
@@ -231,6 +250,45 @@ public class StagManager : InteractableAnimal
         #endregion
     }
 
+    public void AddToInventory(string foodName)
+    {
+        //Debug.Log(foodName);
+        switch(foodName)
+        {
+            case ("Karrot"):
+
+                intKarrotCounter++;
+                karrotCounter.text = "x" + intKarrotCounter.ToString();
+                //intKarrotCounter = ManageFoodCounters(karrotCounter, intKarrotCounter);
+
+                break;
+            case ("Carrot"):
+                //intCarrotCounter = ManageFoodCounters(carrotCounter, intCarrotCounter);
+                intCarrotCounter++;
+                carrotCounter.text = "x" + intCarrotCounter.ToString();
+                break;
+            case ("Radis"):
+                intTurnipCounter++;
+                turnipCounter.text = "x" + intTurnipCounter.ToString();
+                //intTurnipCounter = ManageFoodCounters(turnipCounter, intTurnipCounter);
+                break;
+            case ("Avocat"):
+                intAvocadoCounter++;
+                avocadoCounter.text = "x" + intAvocadoCounter.ToString();
+                //intAvocadoCounter = ManageFoodCounters(avocadoCounter, intAvocadoCounter);
+                break;
+        }
+    }
+
+    //public int ManageFoodCounters(TextMeshProUGUI handledText, int handledCounter)
+    //{
+    //    Debug.Log(handledCounter);
+    //    handledCounter++;
+    //    Debug.Log(handledText);
+    //    handledText.text = "x" + handledCounter.ToString();
+    //    return handledCounter;
+    //}
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.collider.tag == "Apple")
@@ -268,3 +326,4 @@ public class StagManager : InteractableAnimal
         stagAnimator.SetBool("Talking", goingDialog);
     }
 }
+
