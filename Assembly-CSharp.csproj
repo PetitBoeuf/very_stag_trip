@@ -69,8 +69,8 @@
     <Compile Include="Assets\Scripts\MissionSoif.cs" />
     <Compile Include="Assets\Scripts\StagManager.cs" />
     <Compile Include="Assets\Scripts\MinimapCam_Movement.cs" />
-    <Compile Include="Assets\Scripts\WorldManager.cs" />
     <Compile Include="Assets\Scripts\AlimentBouffable.cs" />
+    <Compile Include="Assets\Scripts\WorldManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

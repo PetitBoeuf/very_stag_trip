@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 public class UiMission
 {
@@ -53,6 +54,7 @@ public class WorldManager : MonoBehaviour
     public LayerMask interactableLayer;
     public LayerMask bouffableLayer;
     public TextMeshProUGUI nearbyIAnimalText;
+    //public Camera minimapCam;
 
     public Animator MiniMapAnimator;
 
@@ -117,6 +119,8 @@ public class WorldManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //RenderPipelineManager.beginCameraRendering += OnBeginCameraRendering;
+
         canCollect = false;
         goingDialog = false;
         canInteract = false;
@@ -141,7 +145,8 @@ public class WorldManager : MonoBehaviour
         };
         StartCoroutine(SpawnParticles());
     }
-        private IEnumerator SpawnParticles()
+
+    private IEnumerator SpawnParticles()
         {
             for (int i = 0; i < numParticles; i++)
             {
@@ -171,6 +176,16 @@ public class WorldManager : MonoBehaviour
             }
             yield return null;
         }
+    //void OnBeginCameraRendering(ScriptableRenderContext context, Camera camera)
+    //{
+    //    Debug.Log(camera);
+    //    if(camera == minimapCam)
+    //    {
+    //        Debug.Log("coucou minimap");
+    //        RenderSettings.fog = false;
+    //    }
+    //}
+
 
     // Update is called once per frame
     void Update()

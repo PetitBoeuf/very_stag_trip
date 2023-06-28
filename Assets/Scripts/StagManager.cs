@@ -55,6 +55,11 @@ public class StagManager : InteractableAnimal
     public RabbitManager rabbitScript;
     public Transform rabbitTransform;
 
+    public Animator karrotAnimator;
+    public Animator carrotAnimator;
+    public Animator turnipAnimator;
+    public Animator avocadoAnimator;
+
     public TextMeshProUGUI karrotCounter;
     public TextMeshProUGUI carrotCounter;
     public TextMeshProUGUI turnipCounter;
@@ -256,8 +261,8 @@ public class StagManager : InteractableAnimal
         switch(foodName)
         {
             case ("Karrot"):
-
                 intKarrotCounter++;
+                karrotAnimator.SetBool("FoodOpen", intKarrotCounter > 0);
                 karrotCounter.text = "x" + intKarrotCounter.ToString();
                 //intKarrotCounter = ManageFoodCounters(karrotCounter, intKarrotCounter);
 
@@ -265,15 +270,18 @@ public class StagManager : InteractableAnimal
             case ("Carrot"):
                 //intCarrotCounter = ManageFoodCounters(carrotCounter, intCarrotCounter);
                 intCarrotCounter++;
+                carrotAnimator.SetBool("FoodOpen", intCarrotCounter > 0);
                 carrotCounter.text = "x" + intCarrotCounter.ToString();
                 break;
-            case ("Radis"):
+            case ("Turnip"):
                 intTurnipCounter++;
+                turnipAnimator.SetBool("FoodOpen", intTurnipCounter > 0);
                 turnipCounter.text = "x" + intTurnipCounter.ToString();
                 //intTurnipCounter = ManageFoodCounters(turnipCounter, intTurnipCounter);
                 break;
-            case ("Avocat"):
+            case ("Avocado"):
                 intAvocadoCounter++;
+                avocadoAnimator.SetBool("FoodOpen", intAvocadoCounter > 0);
                 avocadoCounter.text = "x" + intAvocadoCounter.ToString();
                 //intAvocadoCounter = ManageFoodCounters(avocadoCounter, intAvocadoCounter);
                 break;
