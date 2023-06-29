@@ -111,4 +111,9 @@ public class MissionKarot : SOMission
     //{
     //    return true;
     //}
+
+    public override bool MissionSolved(StagManager stagManager)
+    {
+        return stagManager.Holds("Karrot");
+    }
 }

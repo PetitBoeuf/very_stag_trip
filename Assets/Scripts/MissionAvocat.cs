@@ -115,4 +115,9 @@ public class MissionAvocat : SOMission
     //{
     //    return true;
     //}
+
+    public override bool MissionSolved(StagManager stagManager)
+    {
+        return stagManager.Holds("Avocado");
+    }
 }

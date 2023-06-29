@@ -214,7 +214,7 @@ public class WorldManager : MonoBehaviour
                 
                 nearbyIAnimalText.text = "";
 
-                currentDialogSentences = interactableAnimal.currentMission.HandleMission();
+                currentDialogSentences = interactableAnimal.currentMission.HandleMission(stagScript);
 
                 if(interactableAnimal.currentMission.missionState == MissionState.Started) {
                     //add mission to ui

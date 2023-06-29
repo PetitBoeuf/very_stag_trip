@@ -30,7 +30,7 @@ public class SOMission : ScriptableObject
         StagManager stagManager
         ) { }
 
-    public List<string[]> HandleMission()
+    public List<string[]> HandleMission(StagManager stagM)
     {
         List<string[]> returnedSentences = new List<string[]>();
 
@@ -46,7 +46,7 @@ public class SOMission : ScriptableObject
                 //Default is set to failure sentences
                 returnedSentences = failureSentences;
 
-                if (MissionSolved())
+                if (MissionSolved(stagM))
                 {
                     missionState = MissionState.Success;
                     returnedSentences = successSentences;
@@ -57,7 +57,7 @@ public class SOMission : ScriptableObject
         }
         return returnedSentences;
     }
-    public bool MissionSolved()
+    public virtual bool MissionSolved(StagManager stagM)
     {
         return true;
     }

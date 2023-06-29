@@ -169,13 +169,13 @@ public class RabbitManager : InteractableAnimal
      * 
      */
 
-    public void Interact()
-    {
-        //Debug.Log("Animal Interact passed");
+    //public void Interact()
+    //{
+    //    //Debug.Log("Animal Interact passed");
 
-        currentMission.HandleMission();
-        if(currentMission.missionState == MissionState.Sleep)
-        {
-        }
-    }
+    //    currentMission.HandleMission();
+    //    if(currentMission.missionState == MissionState.Sleep)
+    //    {
+    //    }
+    //}
 }

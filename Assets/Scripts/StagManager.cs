@@ -271,6 +271,20 @@ public class StagManager : InteractableAnimal
         //    transform.position.z <= plainTerrainTransf.transform.position.z + plainTerrain.terrainData.size.z;
         return true;
     }
+    public bool Holds(string foodName)
+    {
+        switch (foodName)
+        {
+            case ("Karrot"):
+                return intKarrotCounter > 0;
+            case ("Carrot"):
+                return intKarrotCounter > 0;
+            case ("Avocado"):
+                return intAvocadoCounter > 0;
+        }
+
+        return false;
+    }
     public void AddToInventory(string foodName)
     {
         //Debug.Log(foodName);

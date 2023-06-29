@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class CameraScript : MonoBehaviour
 {
     public Transform playerOrientation;
+    public Transform plotStag;
+
     [Header("DialogCamera")]
     public Transform dialogCameraTransform;
     public Camera dialogCamera;
@@ -40,6 +42,9 @@ public class CameraScript : MonoBehaviour
 
         playerOrientation.right = transform.right;
         compassImageTransf.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.y);
+
+        plotStag.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+
         if (freeLook)
         {
             //dialogCameraTransform.position = transform.position;
