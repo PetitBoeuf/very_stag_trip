@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraScript : MonoBehaviour
 {
@@ -13,6 +15,9 @@ public class CameraScript : MonoBehaviour
     //public Transform mainCamClone;
     //public Transform TPSCamera;
     public Camera cinemachineCamera;
+
+    public Transform compassImageTransf;
+
     [SerializeField]
     private bool freeLook;
     // Start is called before the first frame update
@@ -34,6 +39,7 @@ public class CameraScript : MonoBehaviour
         //playerOrientation.rotation = Quaternion.RotateTowards(transform.rotation, destRotation, playerRotationFactor);
 
         playerOrientation.right = transform.right;
+        compassImageTransf.rotation = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.y);
         if (freeLook)
         {
             //dialogCameraTransform.position = transform.position;

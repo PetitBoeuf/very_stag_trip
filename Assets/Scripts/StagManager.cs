@@ -210,7 +210,7 @@ public class StagManager : InteractableAnimal
         #region MovingStag
         if (isGrounded 
             && 
-            !OnBorders() )
+            NotOnBorders() )
         {
 
             isEating = false;
@@ -259,16 +259,17 @@ public class StagManager : InteractableAnimal
         #endregion
     }
 
-    public bool OnBorders()
+    public bool NotOnBorders()
     {
-        return
-            transform.position.x == plainTerrainTransf.transform.position.x
-            ||
-            transform.position.x == plainTerrainTransf.transform.position.x + plainTerrain.terrainData.size.x
-            ||
-            transform.position.z == plainTerrainTransf.transform.position.z
-            ||
-            transform.position.z == plainTerrainTransf.transform.position.z + plainTerrain.terrainData.size.z;
+        //return
+        //    transform.position.x >= plainTerrainTransf.transform.position.x
+        //    ||
+        //    transform.position.x <= plainTerrainTransf.transform.position.x + plainTerrain.terrainData.size.x
+        //    ||
+        //    transform.position.z >= plainTerrainTransf.transform.position.z
+        //    ||
+        //    transform.position.z <= plainTerrainTransf.transform.position.z + plainTerrain.terrainData.size.z;
+        return true;
     }
     public void AddToInventory(string foodName)
     {

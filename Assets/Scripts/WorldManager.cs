@@ -53,10 +53,14 @@ public class WorldManager : MonoBehaviour
     public int overlapSphereRadius;
     public LayerMask interactableLayer;
     public LayerMask bouffableLayer;
-    public TextMeshProUGUI nearbyIAnimalText;
+    public TextMeshPro nearbyIAnimalText;
     //public Camera minimapCam;
 
     public Animator MiniMapAnimator;
+    public Animator biomeAnimator;
+    public Animator compassAnimator;
+    public Animator missionsAnimator;
+    public Animator inventoryAnimator;
 
     public RawImage iaRawImage;
 
@@ -126,6 +130,11 @@ public class WorldManager : MonoBehaviour
         canInteract = false;
         nearbyIAnimalText.text = "";
         bouffableText.text = "--";
+
+        biomeAnimator.SetBool("InBiome", false); ;
+        compassAnimator.SetBool("Appears", true);
+        missionsAnimator.SetBool("Appears", true);
+        inventoryAnimator.SetBool("Appears", true);
 
         //uiMissionIndex = 0;
         uiMissions = new List<UiMission>()
@@ -202,6 +211,9 @@ public class WorldManager : MonoBehaviour
         {
             if (!goingDialog)
             {
+                
+                nearbyIAnimalText.text = "";
+
                 currentDialogSentences = interactableAnimal.currentMission.HandleMission();
 
                 if(interactableAnimal.currentMission.missionState == MissionState.Started) {
@@ -240,6 +252,12 @@ public class WorldManager : MonoBehaviour
                 return;
             }
 
+            //Debug.Log(goingDialog);
+            biomeAnimator.SetBool("InBiome", !goingDialog);
+            compassAnimator.SetBool("Appears", !goingDialog);
+            missionsAnimator.SetBool("Appears", !goingDialog);
+            inventoryAnimator.SetBool("Appears", !goingDialog);
+
             goingDialog = dialogueManager.DisplayNextSentence();
             interactableAnimal.AbleDisableMovement(goingDialog);
             return;
@@ -253,12 +271,20 @@ public class WorldManager : MonoBehaviour
 
             stagScript.openedMinimap = true;
             MiniMapAnimator.SetBool("Open", true);
+            biomeAnimator.SetBool("InBiome", false);
+            compassAnimator.SetBool("Appears", false);
+            missionsAnimator.SetBool("Appears", false);
+            inventoryAnimator.SetBool("Appears", false);
             return;
         }
         if((Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.M) && stagScript.openedMinimap))
         {
             stagScript.openedMinimap = false;
             MiniMapAnimator.SetBool("Open", false);
+            biomeAnimator.SetBool("InBiome", true);
+            compassAnimator.SetBool("Appears", true);
+            missionsAnimator.SetBool("Appears", true);
+            inventoryAnimator.SetBool("Appears", true);
             return;
         }
         //Fonctionnement 1
@@ -297,7 +323,14 @@ public class WorldManager : MonoBehaviour
             //Debug.Log(interactableAnimal);
             //Debug.Log(interactableAnimal.animalName);
             //Debug.Log(nearbyIAnimalText.text);
-            nearbyIAnimalText.text = interactableAnimal.animalName;
+            nearbyIAnimalText.text = "(Entrée) Parler à " + interactableAnimal.animalName;
+            Vector3 iAnimalPos = interactableAnimal.GetComponent<Transform>().position;
+
+            iAnimalPos.y += 1.5f;
+            canCollect = true;
+
+            nearbyIAnimalText.GetComponent<RectTransform>().position = iAnimalPos;
+            nearbyIAnimalText.GetComponent<RectTransform>().forward = stagOrientation.forward;
             iaRawImage.texture = interactableAnimal.textureRenderer;
 
             return;
@@ -347,6 +380,10 @@ public class WorldManager : MonoBehaviour
         return nearest.gameObject;
     }
 
+    private void MoveUIInfo()
+    {
+
+    }
 
 }
 
