@@ -307,7 +307,9 @@ public class WorldManager : MonoBehaviour
         Collider[] nearBouffables = Physics.OverlapSphere(stagTransform.position, overlapSphereRadius, bouffableLayer);
         //Debug.Log(nearBouffables.Length);
 
-        if(nearBouffables.Length != 0)
+        if (nearBouffables.Length == 0)
+            bouffableText.text = "";
+        else
         {
             if (nearBouffables.Length == 1) alimentBouffable = nearBouffables[0].gameObject.GetComponent<Transform>();
             if(nearBouffables.Length > 1)

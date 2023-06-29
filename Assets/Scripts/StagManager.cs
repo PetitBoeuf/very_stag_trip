@@ -76,6 +76,8 @@ public class StagManager : InteractableAnimal
     //private bool talkingBool;
     private Queue<Dialogue> stagDialogs;
     public bool openedMinimap;
+    public Transform plainTerrainTransf;
+    public Terrain plainTerrain;
     // Start is called before the first frame update
     void Start()
     {
@@ -206,7 +208,9 @@ public class StagManager : InteractableAnimal
 
 
         #region MovingStag
-        if (isGrounded)
+        if (isGrounded 
+            && 
+            !OnBorders() )
         {
 
             isEating = false;
@@ -255,6 +259,17 @@ public class StagManager : InteractableAnimal
         #endregion
     }
 
+    public bool OnBorders()
+    {
+        return
+            transform.position.x == plainTerrainTransf.transform.position.x
+            ||
+            transform.position.x == plainTerrainTransf.transform.position.x + plainTerrain.terrainData.size.x
+            ||
+            transform.position.z == plainTerrainTransf.transform.position.z
+            ||
+            transform.position.z == plainTerrainTransf.transform.position.z + plainTerrain.terrainData.size.z;
+    }
     public void AddToInventory(string foodName)
     {
         //Debug.Log(foodName);
